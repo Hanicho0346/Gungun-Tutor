@@ -1,10 +1,11 @@
-import React from 'react'
+import {Box,} from '@chakra-ui/react'
+import NavBar from './NavBar'
 
 const Main = () => {
   return (
-    <div>
-      hello
-    </div>
+   <Box width={"100%"} >
+    <NavBar/>
+   </Box>
   )
 }
 
