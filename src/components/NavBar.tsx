@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Logo from "../assets/Images/Logo Image.png";
 import background from "../assets/Images/Wave Lines.png";
 import { useMemo } from "react";
-import { useTranslation } from "react-i18next"; // Import useTranslation
+import { useTranslation } from "react-i18next";
 
 interface NavItem {
   label: string;
@@ -11,9 +11,9 @@ interface NavItem {
 }
 
 const NavBar = () => {
-  const { t, i18n } = useTranslation(); // Use the useTranslation hook
+  const { t, i18n } = useTranslation(); 
 
-  // Define navigation items with translations
+
   const navItems: NavItem[] = useMemo(
     () => [
       { label: t("home"), path: "/" },
@@ -22,13 +22,13 @@ const NavBar = () => {
       { label: t("tutors"), path: "/tutors" },
       { label: t("contact"), path: "/contact" },
     ],
-    [t] // Re-run when language changes
+    [t] 
   );
 
-  // Function to toggle between English and Amharic
+
   const toggleLanguage = () => {
     const newLanguage = i18n.language === "en" ? "am" : "en";
-    i18n.changeLanguage(newLanguage); // Change the language
+    i18n.changeLanguage(newLanguage);
   };
 
   return (
@@ -91,14 +91,14 @@ const NavBar = () => {
       </Flex>
 
       <Flex alignItems="center" gap={4}>
-        {/* Language Toggle Button */}
+
         <Button
-          onClick={toggleLanguage} // Toggle language on click
+          onClick={toggleLanguage} 
           size="sm"
           border={"none"}
           colorScheme="brand"
         >
-          {i18n.language === "en" ? "Am" : "En"} {/* Show "Am" for Amharic, "En" for English */}
+          {i18n.language === "en" ? "Am" : "En"}
         </Button>
 
         <NavLink to="/find-tutor" aria-label="Find Your Tutor">
@@ -115,7 +115,7 @@ const NavBar = () => {
             mr={4}
             borderRadius={"full"}
           >
-            {t("findTutor")} {/* Use translation */}
+            {t("findTutor")} 
           </Button>
         </NavLink>
       </Flex>

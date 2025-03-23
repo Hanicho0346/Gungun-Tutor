@@ -496,7 +496,7 @@ const Main = () => {
         />
       </svg>
 
-      {/* Footer content */}
+
       <Flex
         direction={{ base: "column", md: "row" }}
         justify="space-between"
@@ -506,7 +506,7 @@ const Main = () => {
         p={8}
         gap={8}
       >
-        {/* Company Info */}
+
         <Box flex={1}>
           <Text fontSize="xl" fontWeight="bold" mb={4}>
             Goongun Tutor
@@ -522,7 +522,7 @@ const Main = () => {
           </Flex>
         </Box>
 
-        {/* Quick Links */}
+
         <Box flex={1}>
           <Text fontSize="lg" fontWeight="bold" mb={4}>
             Quick Links
@@ -543,7 +543,7 @@ const Main = () => {
           </VStack>
         </Box>
 
-        {/* Contact Info */}
+
         <Box flex={1}>
           <Text fontSize="lg" fontWeight="bold" mb={4}>
             Contact Us
@@ -555,7 +555,7 @@ const Main = () => {
           </VStack>
         </Box>
 
-        {/* Newsletter */}
+
         <Box flex={1}>
           <Text fontSize="lg" fontWeight="bold" mb={4}>
             Newsletter
@@ -585,7 +585,6 @@ const Main = () => {
         </Box>
       </Flex>
 
-      {/* Footer Bottom */}
       <Box bg="brand.600" py={4}>
         <Text fontSize="sm" textAlign="center">
           © {new Date().getFullYear()} Goongun Tutor. All rights reserved.
