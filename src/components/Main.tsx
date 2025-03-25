@@ -8,26 +8,20 @@ import {
   VStack,
   Avatar,
   Divider,
-  Input
 } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
-import NavBar from "./NavBar";
+
 import picture from "../assets/Images/Ethiopian Kids Children.png";
 import picture2 from "../assets/Images/One-on-One-Tutoring.jpg";
-import chat from "../assets/Images/chat.png"
+import chat from "../assets/Images/chat.png";
 import {
   FaRocket,
   FaLightbulb,
   FaCode,
-  FaUsers,
-  FaMapMarkerAlt,
   FaQuoteRight,
-  FaFacebook,
-  FaTwitter,
- FaInstagram,
-  FaLinkedin,
+  FaCheck,
 } from "react-icons/fa";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const float = keyframes`
@@ -71,7 +65,7 @@ const HoverBox = ({ icon, title, description, color }) => (
       transform: "scale(1.05)",
       boxShadow: "lg",
     }}
-    border={"2px solid orange"}
+    border={"2px solid green"}
   >
     <Box
       className="icon-container"
@@ -97,121 +91,8 @@ const HoverBox = ({ icon, title, description, color }) => (
   </Box>
 );
 
-const Count = () => {
-  const [clientCount, setClientCount] = useState(0);
-  const [locationCount, setLocationCount] = useState(0);
-  const countRef = useRef(null);
-
-  const targetClients = 500;
-  const targetLocations = 300;
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          const clientInterval = setInterval(() => {
-            setClientCount((prev) => {
-              if (prev >= targetClients) {
-                clearInterval(clientInterval);
-                return prev;
-              }
-              return prev + 1;
-            });
-          }, 10);
-
-          const locationInterval = setInterval(() => {
-            setLocationCount((prev) => {
-              if (prev >= targetLocations) {
-                clearInterval(locationInterval);
-                return prev;
-              }
-              return prev + 1;
-            });
-          }, 10);
-        } else {
-          setClientCount(0);
-          setLocationCount(0);
-        }
-      },
-      { threshold: 0.5 }
-    );
-
-    if (countRef.current) {
-      observer.observe(countRef.current);
-    }
-
-    return () => {
-      if (countRef.current) {
-        observer.unobserve(countRef.current);
-      }
-    };
-  }, [targetClients, targetLocations]);
-
-  return (
-    <Flex
-      ref={countRef}
-      direction={{ base: "column", md: "row" }}
-      gap={6}
-      justifyContent="center"
-      alignItems="center"
-      mt={10}
-    >
-      <Box
-        width={{ base: "100%", md: "300px" }}
-        height="200px"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        p={4}
-        textAlign="center"
-        borderRadius="lg"
-        bg="blue.50"
-        border="2px solid"
-        borderColor="blue.200"
-        transition="0.3s ease"
-        _hover={{
-          transform: "scale(1.05)",
-          boxShadow: "lg",
-        }}
-      >
-        <Icon as={FaUsers} fontSize="3xl" color="blue.500" mb={3} />
-        <Text fontSize="xl" fontWeight="bold" color="blue.700">
-          +{clientCount} Clients
-        </Text>
-      </Box>
-
-      <Box
-        width={{ base: "100%", md: "300px" }}
-        height="200px"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        flexDirection="column"
-        p={4}
-        textAlign="center"
-        borderRadius="lg"
-        bg="green.50"
-        border="2px solid"
-        borderColor="green.200"
-        transition="0.3s ease"
-        _hover={{
-          transform: "scale(1.05)",
-          boxShadow: "lg",
-        }}
-      >
-        <Icon as={FaMapMarkerAlt} fontSize="3xl" color="green.500" mb={3} />
-        <Text fontSize="xl" fontWeight="bold" color="green.700">
-          +{locationCount} Locations
-        </Text>
-      </Box>
-    </Flex>
-  );
-};
-
 const ClientCard = ({ name, relation, review }) => {
-const {t}=useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -298,12 +179,11 @@ const Main = () => {
 
   return (
     <Box width="100%" overflow={"hidden"}>
-      <NavBar/>
       <Flex
         flexDir={{ base: "column", md: "row" }}
         alignItems="center"
         justifyContent="space-between"
-        mt={"48"}
+        mt={"52"}
         px={7}
       >
         <Flex flexDir="column" maxWidth={{ base: "100%", md: "40%" }}>
@@ -311,7 +191,7 @@ const Main = () => {
             <Text
               fontSize={{ base: "3xl", md: "5xl" }}
               fontWeight="bold"
-              mt={{ base: 10, md: 20 }}
+              mt={{ base: 10, md: "24" }}
               lineHeight="1.2"
             >
               Empower Your{" "}
@@ -343,7 +223,7 @@ const Main = () => {
           boxShadow="2xl"
           transform="rotate(-10deg)"
           borderRadius="xl"
-          mt={{ base: 10, md: 6 }}
+          mt={{ base: 10, md: "16" }}
           animation={floatAnimation}
         >
           <Image
@@ -374,7 +254,7 @@ const Main = () => {
           />
         </Box>
       </Flex>
-      <Box mt={20}>
+      <Box mt={"32"}>
         <Text
           textAlign={"center"}
           align={"center"}
@@ -382,8 +262,8 @@ const Main = () => {
           fontWeight="bold"
           mb={0}
         >
-          What We{" "}
-          <Box as="span" color={"brand.500"}>
+          What We
+          <Box as="span" color={"brand.500"} mx={2}>
             Do
           </Box>
         </Text>
@@ -412,24 +292,57 @@ const Main = () => {
           color="white"
         />
       </Flex>
-      <Box mt={20}>
-        <Text
-          textAlign={"center"}
-          align={"center"}
-          fontSize={"5xl"}
-          fontWeight="bold"
-          mb={0}
-        >
-          Our Journey
-        </Text>
-        <Text align={"center"} size={"sm"} color={"gray.500"}>
-          Discover the milestones and stories that define our journey to
-          empowering education.
-        </Text>
-      </Box>
-      <Flex mt={10} justifyContent="center" flexWrap="wrap" gap={10}>
-        <Count />
+
+      <Flex
+        flexDir={"row"}
+        align="center"
+        mt={"24"}
+        gap={10}
+        justifyContent={"space-around"}
+      >
+        <Box maxW="600px" mt={10} mx="auto" textAlign="left">
+          <Text fontSize="5xl" fontWeight={"bold"} color="black">
+            More Engaging ,More{" "}
+            <Box as="span" color={"brand.400"} letterSpacing="widest">
+              Sucessfull{" "}
+            </Box>{" "}
+            Result
+          </Text>
+          <Text fontSize={"md"} color={"gray.500"} mb={8}>
+            Our range of online study tools prepared by university teachers and
+            experts in the field that individuals can enroll in to practice and
+            assess where they are standing.
+          </Text>
+          <Divider orientation="horizontal" />
+          <Flex
+            flexDir="row"
+            alignItems="center"
+            gap={3} 
+          >
+            <Box
+              borderRadius="full"
+              border="2px solid"
+              borderColor="orange.400"
+              p={2} 
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              color="orange.400"
+              boxSize="24px" 
+            >
+              <FaCheck size="30px" />
+            </Box>
+            <Text fontSize="md" fontWeight="medium" color="gray.700">
+              Trained Tutor
+            </Text>
+          </Flex>
+        </Box>
+
+        <Box>
+          <Image src={picture} />
+        </Box>
       </Flex>
+
       <Divider mt={20} />
       <Flex
         mt={20}
@@ -440,23 +353,30 @@ const Main = () => {
         justifyContent={"space-around"}
       >
         <Flex justifyContent={"flex-start"}>
-        <Box maxW="600px" mt={10} mx="auto" textAlign="left">
-        <Image src={chat} color="brand.500" boxSize={"100px"} mb={4} /> 
-          <Text fontSize="3xl" fontWeight={"md"} fontFamily={"monospace"} color="brand.500" letterSpacing="widest" mb={4}>
-            Our Testimonials
-          </Text>
-          <Text fontSize="5xl" fontWeight="bold" mb={4}>
-            Our
-            <Box as="span" color="brand.500" mx={2}>
-              Client's
-            </Box>
-            Says
-          </Text>
-          <Text fontSize="md" color="gray.500" mb={8}>
-            Discover how our tutoring services have empowered countless parents
-            and students alike to achieve academic success.
-          </Text>
-        </Box>
+          <Box maxW="600px" mt={10} mx="auto" textAlign="left">
+            <Image src={chat} color="brand.500" boxSize={"100px"} mb={4} />
+            <Text
+              fontSize="3xl"
+              fontWeight={"md"}
+              fontFamily={"monospace"}
+              color="brand.500"
+              letterSpacing="widest"
+              mb={4}
+            >
+              Our Testimonials
+            </Text>
+            <Text fontSize="5xl" fontWeight="bold" mb={4}>
+              Our
+              <Box as="span" color="brand.500" mx={2}>
+                Client's
+              </Box>
+              Says
+            </Text>
+            <Text fontSize="md" color="gray.500" mb={8}>
+              Discover how our tutoring services have empowered countless
+              parents and students alike to achieve academic success.
+            </Text>
+          </Box>
         </Flex>
         <Flex flexDir={"column"} align="center" m={2} gap={10}>
           <ClientCard
@@ -480,125 +400,6 @@ const Main = () => {
           </Flex>
         </Flex>
       </Flex>
-      <Divider mt={20} />
-
-      <Box as="footer" bg="brand.500" color="white" mt={20}>
-
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1440 100"
-        preserveAspectRatio="none"
-        style={{ width: "100%", height: "50px", display: "block" }}
-      >
-        <path
-          d="M0,50 Q180,0 360,50 T720,50 T1080,50 T1440,50 L1440,100 L0,100 Z"
-          fill="currentColor"
-        />
-      </svg>
-
-
-      <Flex
-        direction={{ base: "column", md: "row" }}
-        justify="space-between"
-        align="flex-start"
-        maxW="1200px"
-        mx="auto"
-        p={8}
-        gap={8}
-      >
-
-        <Box flex={1}>
-          <Text fontSize="xl" fontWeight="bold" mb={4}>
-            Goongun Tutor
-          </Text>
-          <Text fontSize="sm" mb={4}>
-            Empowering students with world-class tutoring services to achieve academic success.
-          </Text>
-          <Flex gap={4}>
-            <Icon as={FaFacebook} boxSize={6} cursor="pointer" _hover={{ color: "brand.200" }} />
-            <Icon as={FaTwitter} boxSize={6} cursor="pointer" _hover={{ color: "brand.200" }} />
-            <Icon as={FaInstagram} boxSize={6} cursor="pointer" _hover={{ color: "brand.200" }} />
-            <Icon as={FaLinkedin} boxSize={6} cursor="pointer" _hover={{ color: "brand.200" }} />
-          </Flex>
-        </Box>
-
-
-        <Box flex={1}>
-          <Text fontSize="lg" fontWeight="bold" mb={4}>
-            Quick Links
-          </Text>
-          <VStack align="start" spacing={3}>
-            <Text fontSize="sm" _hover={{ color: "brand.200", cursor: "pointer" }}>
-              Home
-            </Text>
-            <Text fontSize="sm" _hover={{ color: "brand.200", cursor: "pointer" }}>
-              About Us
-            </Text>
-            <Text fontSize="sm" _hover={{ color: "brand.200", cursor: "pointer" }}>
-              Services
-            </Text>
-            <Text fontSize="sm" _hover={{ color: "brand.200", cursor: "pointer" }}>
-              Contact Us
-            </Text>
-          </VStack>
-        </Box>
-
-
-        <Box flex={1}>
-          <Text fontSize="lg" fontWeight="bold" mb={4}>
-            Contact Us
-          </Text>
-          <VStack align="start" spacing={3}>
-            <Text fontSize="sm">Email: info@goonguntutor.com</Text>
-            <Text fontSize="sm">Phone: +1 (123) 456-7890</Text>
-            <Text fontSize="sm">Address: 123 Tutor St, Education City, World</Text>
-          </VStack>
-        </Box>
-
-
-        <Box flex={1}>
-          <Text fontSize="lg" fontWeight="bold" mb={4}>
-            Newsletter
-          </Text>
-          <Text fontSize="sm" mb={4}>
-            Subscribe to our newsletter to get the latest updates and offers.
-          </Text>
-          <Flex>
-            <Input
-              placeholder="Your email"
-              bg="white"
-              color="black"
-              borderRadius="md"
-              borderRightRadius={0}
-              _focus={{ outline: "none" }}
-            />
-            <Button
-              bg="brand.600"
-              color="white"
-              borderRadius="md"
-              borderLeftRadius={0}
-              _hover={{ bg: "brand.700" }}
-            >
-              Subscribe
-            </Button>
-          </Flex>
-        </Box>
-      </Flex>
-
-      <Box bg="brand.600" py={4}>
-        <Text fontSize="sm" textAlign="center">
-          © {new Date().getFullYear()} Goongun Tutor. All rights reserved.
-        </Text>
-        <Flex justifyContent="center" gap={4} mt={2}>
-          <Text fontSize="sm" _hover={{ color: "brand.200", cursor: "pointer" }}>
-            Privacy Policy
-          </Text>
-          <Text fontSize="sm" _hover={{ color: "brand.200", cursor: "pointer" }}>
-            Terms of Service
-          </Text>
-        </Flex>
-      </Box>
-    </Box>
     </Box>
   );
 };
