@@ -1,9 +1,16 @@
-import { Box, Button, Flex, Image, useBreakpointValue } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  useBreakpointValue,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Logo from "../assets/Images/Logo Image.png";
 import background from "../assets/Images/Wave Lines.png";
-import { useEffect, useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 interface NavItem {
   label: string;
@@ -13,12 +20,14 @@ interface NavItem {
 const NavBar = () => {
   const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
+  
   const navbarWidth = useBreakpointValue({ base: "100%", md: "95%" });
+  const textColor = useColorModeValue("brand.500", "white");
 
   const navItems: NavItem[] = useMemo(
     () => [
       { label: t("home"), path: "/" },
-      { label: t("about"), path: "/about" },
+      { label: t("about"), path: "/about" }, 
       { label: t("services"), path: "/services" },
       { label: t("tutors"), path: "/tutors" },
       { label: t("contact"), path: "/contact" },
@@ -26,10 +35,10 @@ const NavBar = () => {
     [t]
   );
 
-  const toggleLanguage = () => {
+  const toggleLanguage = useCallback(() => {
     const newLanguage = i18n.language === "en" ? "am" : "en";
     i18n.changeLanguage(newLanguage);
-  };
+  }, [i18n]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,15 +48,26 @@ const NavBar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const backgroundStyles = {
+    backgroundImage: `url(${background})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    position: "absolute",
+    inset: 0,
+    opacity: 1,
+    borderRadius: "full",
+  };
+
   return (
     <Flex
       as="nav"
-      justifyContent="space-between"
-      alignItems="center"
-      p={{ base: 2, md: 6 }} 
-      background="white"
+      justify="space-between"
+      align="center"
+      p={{ base: 2, md: 6 }}
+      bg="white"
       color="white"
-      width={navbarWidth}
+      w={navbarWidth}
       position="fixed"
       top={5}
       left="50%"
@@ -56,32 +76,22 @@ const NavBar = () => {
       borderRadius="full"
       zIndex="sticky"
       transition="all 0.3s ease"
-      height="100px" 
+      h="100px"
+      role="navigation"
+      aria-label="Main navigation"
     >
-      <Box
-        backgroundImage={`url(${background})`}
-        backgroundSize="cover"
-        backgroundPosition="center"
-        backgroundRepeat="no-repeat"
-        position="absolute"
-        top="0"
-        left="0"
-        right="0"
-        bottom="0"
-        opacity="1"
-        borderRadius="full"
-      />
+      <Box {...backgroundStyles} />
 
       <NavLink to="/" aria-label="Home">
         <Image
           ml={{ base: 2, md: 4 }}
           src={Logo}
-          boxSize={{ base: "40px", md: "90px" }} 
-          objectFit="contain" 
+          boxSize={{ base: "40px", md: "90px" }}
+          objectFit="contain"
           alt="Logo"
-          transition="all 0.2s ease" 
+          transition="all 0.2s ease"
           _hover={{
-            transform: "scale(1.05)", 
+            transform: "scale(1.05)",
             opacity: 0.9,
           }}
         />
@@ -91,33 +101,42 @@ const NavBar = () => {
         as="ul"
         direction="row"
         gap={{ base: 3, sm: 4, md: 8 }}
-        fontSize={{ base: "xs", sm: "sm", md: "md", lg: "lg", xl: "lg" }} 
-        textColor="brand.500"
-        fontWeight="md"
+        fontSize={{ base: "xs", sm: "sm", md: "md", lg: "lg", xl: "lg" }}
+        color={textColor}
+        fontWeight="medium"
         listStyleType="none"
-        role="navigation"
+        role="list"
         display={{ base: "none", md: "flex" }}
       >
         {navItems.map((item) => (
-          <NavLink
-            key={item.path}
-            to={item.path}
-            style={{ textDecoration: "none",cursor:"pointer", color: "inherit" }}
-          >
-            <Box as="li" _hover={{ textDecoration: "underline" }}>
+          <Box as="li" key={item.path}>
+            <NavLink 
+              to={item.path}
+              style={({ isActive }) => ({
+                textDecoration: isActive ? "underline" : "none",
+                fontWeight: isActive ? "bold" : "normal",
+                color: textColor,
+                padding: "8px 12px",
+                borderRadius: "4px",
+                transition: "all 0.2s ease",
+              })}
+            >
               {item.label}
-            </Box>
-          </NavLink>
+            </NavLink>
+          </Box>
         ))}
       </Flex>
 
-      <Flex alignItems="center" gap={{ base: 2, md: 3 }}>
+      <Flex align="center" gap={{ base: 2, md: 3 }}>
         <Button
           onClick={toggleLanguage}
-          size="md" 
+          size="md"
           border="none"
           borderRadius="md"
           bg="brand.500"
+          color="white"
+          _hover={{ bg: "brand.600" }}
+          aria-label="Toggle language"
         >
           {i18n.language === "en" ? "Am" : "En"}
         </Button>
@@ -130,13 +149,13 @@ const NavBar = () => {
               color: "black",
             }}
             boxShadow="md"
-            textColor="brand.400"
+            color="brand.400"
             p={{ base: 3, md: 6 }}
-            background="linear-gradient(90deg, white, #FFD59A, white)"
+            bg="linear-gradient(90deg, white, #FFD59A, white)"
             mr={{ base: 1, md: 3 }}
             borderRadius="full"
-            size={{ base: "xs", md: "md" }} 
-            fontSize={{ base: "xs", md: "md" }} 
+            size={{ base: "xs", md: "md" }}
+            fontSize={{ base: "xs", md: "md" }}
           >
             {t("findTutor")}
           </Button>

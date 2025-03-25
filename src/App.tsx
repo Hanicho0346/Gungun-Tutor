@@ -1,6 +1,6 @@
-
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { Box } from "@chakra-ui/react";
 import Blog from "./components/Blog";
 import ContactUs from "./components/ContactUs";
 import SignUp from "./components/SignUp";
@@ -9,27 +9,18 @@ import NotFound from "./components/NotFound";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import About from "./components/About";
-import { Box } from "@chakra-ui/react";
 
 function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
-  const isNotFoundPage = location.pathname === "*";
+  const isNotFoundPage = location.pathname === "/not-found";
 
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
-      {!isNotFoundPage && (
-        <Box w="100%">
-          <NavBar />
-        </Box>
-      )}
+      {!isNotFoundPage && <NavBar />}
       <Box flex="1" w="100%">
         {children}
       </Box>
-      {!isNotFoundPage && (
-        <Box w="100%">
-          <Footer />
-        </Box>
-      )}
+      {!isNotFoundPage && <Footer />}
     </Box>
   );
 }
@@ -79,7 +70,7 @@ function App() {
           }
         />
         <Route
-          path="*"
+          path="/not-found"
           element={
             <Box minH="100vh">
               <NotFound />
@@ -87,12 +78,12 @@ function App() {
           }
         />
         <Route
- path="/about"
- element={
-  <Layout>
-  <About />
-</Layout>
- }
+          path="*"
+          element={
+            <Layout>
+              <NotFound />
+            </Layout>
+          }
         />
       </Routes>
     </BrowserRouter>
