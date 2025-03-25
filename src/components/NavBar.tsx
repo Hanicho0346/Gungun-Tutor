@@ -102,7 +102,7 @@ const NavBar = () => {
           <NavLink
             key={item.path}
             to={item.path}
-            style={{ textDecoration: "none", color: "inherit" }}
+            style={{ textDecoration: "none",cursor:"pointer", color: "inherit" }}
           >
             <Box as="li" _hover={{ textDecoration: "underline" }}>
               {item.label}

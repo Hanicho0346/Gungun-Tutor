@@ -5,6 +5,7 @@ import ContactUs from "./components/ContactUs";
 import SignUp from "./components/SignUp";
 import Main from "./components/Main";
 import NotFound from "./components/NotFound";
+import About from "./components/About";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { Box } from "@chakra-ui/react";
@@ -57,6 +58,14 @@ function App() {
           element={
             <Layout>
               <ContactUs />
+            </Layout>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <Layout>
+              <About />
             </Layout>
           }
         />
