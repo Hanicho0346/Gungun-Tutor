@@ -1,3 +1,4 @@
+
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Blog from "./components/Blog";
@@ -7,6 +8,7 @@ import Main from "./components/Main";
 import NotFound from "./components/NotFound";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import About from "./components/About";
 import { Box } from "@chakra-ui/react";
 
 function Layout({ children }: { children: React.ReactNode }) {
@@ -75,6 +77,14 @@ function App() {
               <NotFound />
             </Box>
           }
+        />
+        <Route
+ path="/about"
+ element={
+  <Layout>
+  <About />
+</Layout>
+ }
         />
       </Routes>
     </BrowserRouter>
