@@ -8,14 +8,12 @@ import {
   VStack,
   Avatar,
   Divider,
-  useBreakpointValue,
   useMediaQuery,
 } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaLightbulb, FaCode, FaQuoteRight, FaCheck } from "react-icons/fa";
-import MapWithMarkers from "./MapWithMarker";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 import picture from "../assets/Images/Ethiopian Kids Children.png";

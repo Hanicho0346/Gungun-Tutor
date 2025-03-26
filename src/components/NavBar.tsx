@@ -1,8 +1,21 @@
-import { Box, Button, Flex, Image, useBreakpointValue, IconButton, Drawer, DrawerOverlay, DrawerContent, DrawerBody, VStack, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Flex,
+  Image,
+  useBreakpointValue,
+  IconButton,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  VStack,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import Logo from "../assets/Images/Logo Image.png";
 import background from "../assets/Images/Wave Lines.png";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 
@@ -100,7 +113,11 @@ const NavBar = () => {
             <NavLink
               key={item.path}
               to={item.path}
-              style={{ textDecoration: "none", cursor: "pointer", color: "inherit" }}
+              style={{
+                textDecoration: "none",
+                cursor: "pointer",
+                color: "inherit",
+              }}
             >
               <Box as="li" _hover={{ textDecoration: "underline" }}>
                 {item.label}
