@@ -4,13 +4,22 @@ import {
   Flex,
   Image,
   useBreakpointValue,
-  useColorModeValue,
+  IconButton,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerBody,
+  VStack,
+  useDisclosure,
+  Link,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import Logo from "../assets/Images/Logo Image.png";
-import background from "../assets/Images/Wave Lines.png";
+import { useCallback, useMemo } from "react";
+import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import logo  from "../assets/Images/Logo Image.png"
 
 interface NavItem {
   label: string;
@@ -19,16 +28,16 @@ interface NavItem {
 
 const NavBar = () => {
   const { t, i18n } = useTranslation();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const location = useLocation();
   
+  const isMobile = useBreakpointValue({ base: true, md: false });
   const navbarWidth = useBreakpointValue({ base: "100%", md: "95%" });
-  const textColor = useColorModeValue("brand.500", "white");
 
   const navItems: NavItem[] = useMemo(
     () => [
       { label: t("home"), path: "/" },
-      { label: t("about"), path: "/about" }, 
-      { label: t("services"), path: "/services" },
+      { label: t("about"), path: "/about" },
       { label: t("tutors"), path: "/tutors" },
       { label: t("contact"), path: "/contact" },
     ],
@@ -40,128 +49,202 @@ const NavBar = () => {
     i18n.changeLanguage(newLanguage);
   }, [i18n]);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY < 10);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const backgroundStyles = {
-    backgroundImage: `url(${background})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    position: "absolute",
-    inset: 0,
-    opacity: 1,
-    borderRadius: "full",
-  };
+  const isActive = (path: string) => location.pathname === path;
 
   return (
-    <Flex
-      as="nav"
-      justify="space-between"
-      align="center"
-      p={{ base: 2, md: 6 }}
-      bg="white"
-      color="white"
-      w={navbarWidth}
-      position="fixed"
-      top={5}
-      left="50%"
-      transform="translateX(-50%)"
-      boxShadow={isScrolled ? "0px 4px 10px rgba(0, 0, 0, 0.3)" : "md"}
-      borderRadius="full"
-      zIndex="sticky"
-      transition="all 0.3s ease"
-      h="100px"
-      role="navigation"
-      aria-label="Main navigation"
-    >
-      <Box {...backgroundStyles} />
-
-      <NavLink to="/" aria-label="Home">
-        <Image
-          ml={{ base: 2, md: 4 }}
-          src={Logo}
-          boxSize={{ base: "40px", md: "90px" }}
-          objectFit="contain"
-          alt="Logo"
-          transition="all 0.2s ease"
-          _hover={{
-            transform: "scale(1.05)",
-            opacity: 0.9,
-          }}
-        />
-      </NavLink>
-
+    <>
       <Flex
-        as="ul"
-        direction="row"
-        gap={{ base: 3, sm: 4, md: 8 }}
-        fontSize={{ base: "xs", sm: "sm", md: "md", lg: "lg", xl: "lg" }}
-        color={textColor}
-        fontWeight="medium"
-        listStyleType="none"
-        role="list"
-        display={{ base: "none", md: "flex" }}
+        as="nav"
+        justify="space-between"
+        align="center"
+        p={{ base: 3, md: 6 }}
+        bg="white"
+        color="white"
+        w={navbarWidth}
+        position="fixed"
+        top={0}
+        left="50%"
+        transform="translateX(-50%)"
+        boxShadow="md"
+        borderRadius={{ base: "none", md: "full" }}
+        zIndex="sticky"
+        height={{ base: "70px", md: "100px" }}
+        m={2}
       >
-        {navItems.map((item) => (
-          <Box as="li" key={item.path}>
-            <NavLink 
-              to={item.path}
-              style={({ isActive }) => ({
-                textDecoration: isActive ? "underline" : "none",
-                fontWeight: isActive ? "bold" : "normal",
-                color: textColor,
-                padding: "8px 12px",
-                borderRadius: "4px",
-                transition: "all 0.2s ease",
-              })}
-            >
-              {item.label}
-            </NavLink>
-          </Box>
-        ))}
-      </Flex>
+        {/* Background wave pattern - only visible on desktop */}
+        {!isMobile && (
+          <Box
+            backgroundImage="url(/wave-lines.png)"
+            backgroundSize="cover"
+            backgroundPosition="center"
+            backgroundRepeat="no-repeat"
+            position="absolute"
+            inset={0}
+            opacity={1}
+            borderRadius={{ base: "none", md: "full" }}
+            zIndex={-1}
+          />
+        )}
 
-      <Flex align="center" gap={{ base: 2, md: 3 }}>
-        <Button
-          onClick={toggleLanguage}
-          size="md"
-          border="none"
-          borderRadius="md"
-          bg="brand.500"
-          color="white"
-          _hover={{ bg: "brand.600" }}
-          aria-label="Toggle language"
-        >
-          {i18n.language === "en" ? "Am" : "En"}
-        </Button>
-
-        <NavLink to="/find-tutor" aria-label="Find Your Tutor">
-          <Button
+        <NavLink to="/" aria-label="Home">
+          <Image
+            ml={{ base: 2, md: 4 }}
+            src={logo}
+            boxSize={{ base: "40px", md: "90px" }}
+            objectFit="contain"
+            alt="Company Logo"
+            transition="all 0.2s ease"
             _hover={{
-              boxShadow: "lg",
-              bg: "#FFD59A",
-              color: "black",
+              transform: "scale(1.05)",
+              opacity: 0.9,
             }}
-            boxShadow="md"
-            color="brand.400"
-            p={{ base: 3, md: 6 }}
-            bg="linear-gradient(90deg, white, #FFD59A, white)"
-            mr={{ base: 1, md: 3 }}
-            borderRadius="full"
-            size={{ base: "xs", md: "md" }}
-            fontSize={{ base: "xs", md: "md" }}
-          >
-            {t("findTutor")}
-          </Button>
+          />
         </NavLink>
+
+        {!isMobile && (
+          <List
+            as="ul"
+            display="flex"
+            gap={{ base: 3, sm: 4, md: 8 }}
+            fontSize={{ base: "xs", sm: "sm", md: "md", lg: "lg", xl: "lg" }}
+            color="brand.500"
+            fontWeight="medium"
+            role="navigation"
+            aria-label="Main navigation"
+          >
+            {navItems.map((item) => (
+              <ListItem key={item.path}>
+                <Link
+                  as={NavLink}
+                  to={item.path}
+                  position="relative"
+                  _hover={{ textDecoration: "none" }}
+                  _after={{
+                    content: '""',
+                    position: "absolute",
+                    bottom: "-2px",
+                    left: 0,
+                    width: isActive(item.path) ? "100%" : "0%",
+                    height: "2px",
+                    bg: "brand.500",
+                    transition: "width 0.3s ease",
+                  }}
+                  _hover={{
+                    _after: {
+                      width: "100%",
+                    },
+                  }}
+                  color={isActive(item.path) ? "brand.600" : "brand.500"}
+                >
+                  {item.label}
+                </Link>
+              </ListItem>
+            ))}
+          </List>
+        )}
+
+        {/* Right-side buttons */}
+        <Flex align="center" gap={{ base: 2, md: 3 }}>
+          {/* Mobile menu button */}
+          {isMobile && (
+            <IconButton
+              aria-label="Open menu"
+              icon={<HamburgerIcon />}
+              onClick={onOpen}
+              variant="ghost"
+              color="brand.500"
+              size="lg"
+              mr={1}
+            />
+          )}
+
+          {/* Language toggle */}
+          <Button
+            onClick={toggleLanguage}
+            size={{ base: "sm", md: "md" }}
+            border="none"
+            borderRadius="md"
+            bg="brand.500"
+            color="white"
+            _hover={{ bg: "brand.600" }}
+            aria-label={`Switch to ${
+              i18n.language === "en" ? "Amharic" : "English"
+            } language`}
+          >
+            {i18n.language === "en" ? "Am" : "En"}
+          </Button>
+
+          {/* CTA Button */}
+          <NavLink to="/find-tutor" aria-label="Find Your Tutor">
+            <Button
+              _hover={{
+                boxShadow: "lg",
+                bg: "#FFD59A",
+                color: "black",
+              }}
+              boxShadow="md"
+              color="brand.400"
+              p={{ base: 3, md: 6 }}
+              bgGradient="linear(to-r, white, #FFD59A, white)"
+              mr={{ base: 1, md: 3 }}
+              borderRadius="full"
+              size={{ base: "sm", md: "md" }}
+              fontSize={{ base: "xs", md: "md" }}
+            >
+              {t("findTutor")}
+            </Button>
+          </NavLink>
+        </Flex>
       </Flex>
-    </Flex>
+
+      {/* Mobile Drawer */}
+      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <Flex p={4} justifyContent="flex-end">
+            <IconButton
+              aria-label="Close menu"
+              icon={<CloseIcon />}
+              onClick={onClose}
+              variant="ghost"
+              color="brand.500"
+            />
+          </Flex>
+          <DrawerBody>
+            <VStack
+              as="nav"
+              spacing={4}
+              align="stretch"
+              mt={10}
+              aria-label="Mobile navigation"
+            >
+              {navItems.map((item) => (
+                <Link
+                  key={item.path}
+                  as={NavLink}
+                  to={item.path}
+                  onClick={onClose}
+                  p={3}
+                  fontSize="lg"
+                  fontWeight="medium"
+                  color={isActive(item.path) ? "brand.600" : "brand.500"}
+                  bg={isActive(item.path) ? "gray.50" : "transparent"}
+                  borderRadius="md"
+                  _hover={{
+                    bg: "gray.50",
+                    textDecoration: "none",
+                  }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </VStack>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+
+      <Box height={{ base: "70px", md: "100px" }} />
+    </>
   );
 };
 

@@ -34,7 +34,7 @@ const resources = {
       services: "አገልግሎቶች",
       tutors: "አስተማሪዎች",
       contact: "አግኙን",
-      findTutor: "አስተማሪዎን ያግኙ",
+      SignUp: "",
       client1: {
         name: "ወ/ሮ ቅድስት",
         relation: "እናት",

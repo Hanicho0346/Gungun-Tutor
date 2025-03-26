@@ -7,12 +7,36 @@ import {
   Input,
   Button,
   Divider,
+  Stack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from "react-icons/fa";
-
+import { FaFacebook, FaTiktok } from "react-icons/fa";
+import { RiSendPlaneFill } from "react-icons/ri";
+import { MdOutlineEmail } from "react-icons/md";
+import { Link } from "react-router-dom";
+const links = [
+  {
+    Icon: FaFacebook,
+    to: "https://www.youtube.com/@GoonGoonTube",
+  },
+  {
+    Icon: FaTiktok,
+    to: "https://www.tiktok.com/@goongoontutors",
+  },
+  {
+    Icon: MdOutlineEmail,
+    to: "info@goongoon.net",
+  },
+  {
+    Icon: RiSendPlaneFill,
+    to: "https://t.me/GoongoonTutor",
+  },
+];
 const Footer = () => {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
-    <Box >
+    <Box>
       <Divider my={10} />
       <Box
         as="footer"
@@ -22,57 +46,6 @@ const Footer = () => {
         mt={20}
         position="relative"
       >
-        <Flex justifyContent="center">
-          <Flex
-            flexDir={{ base: "column", md: "row" }}
-            align="center"
-            gap={6}
-            p={6}
-            borderRadius="full"
-            bg="white"
-            maxW="95%"
-            mx="auto"
-            width={"80%"}
-            height={"150px"}
-            position="relative"
-            top="-30px"
-            zIndex="1"
-            boxShadow="0px 4px 10px rgba(0, 0, 0, 0.3)"
-            justifyContent={"space-between"}
-          >
-            <Box textAlign={{ base: "center", md: "left" }} ml={6}>
-              <Text
-                fontSize="3xl"
-                fontWeight="bold"
-                fontFamily="monospace"
-                color="black"
-                letterSpacing="widest"
-              >
-                <Box as="span" color={"brand.500"} >
-                  Ready?
-                </Box>
-                Get Tutor
-              </Text>
-              <Text fontSize="sm" color="black" textColor={"gray.500"}>
-                We provide tutoring services in multiple locations across the
-                globe.
-              </Text>
-            </Box>
-            <Button
-              fontSize="lg"
-              fontWeight="bold"
-              color="white"
-              borderRadius={"xl"}
-              bg="brand.500"
-              px={8}
-              py={6}
-              _hover={{ bg: "brand.300", color: "white",boxShadow:"xl" }}
-            >
-              Find Match Tutor
-            </Button>
-          </Flex>
-        </Flex>
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1440 50"
@@ -85,7 +58,7 @@ const Footer = () => {
           />
         </svg>
 
-        <Box width="full" bg="brand.500" >
+        <Box width="full" bg="brand.500">
           <Flex
             direction={{ base: "column", md: "row" }}
             justify="space-between"
@@ -95,40 +68,53 @@ const Footer = () => {
             px={{ base: 4, md: 8 }}
             py={6}
             gap={6}
-            height={"300px"}
+            height={{ base: "auto", md: "350px" }}
           >
-            <Box flex={1} minW={{ base: "full", md: "200px" }}>
-              <Text fontSize="xl" fontWeight="bold" mb={4}>
+            <Box
+              flex={1}
+              minW={{ base: "full", md: "200px" }}
+              mb={{ base: 6, md: 0 }}
+            >
+              <Text fontSize="2xl" fontWeight="bold" mb={4}>
                 Goongun Tutor
               </Text>
-              <Text fontSize="sm" mb={4}>
+              <Text fontSize="md" mb={4}>
                 Empowering students with world-class tutoring services to
                 achieve academic success.
               </Text>
-              <Flex gap={4}>
-                {[FaFacebook, FaTwitter, FaInstagram, FaLinkedin].map(
-                  (IconComponent, index) => (
+              <Flex gap={4} justify={{ base: "center", md: "flex-start" }}>
+                {links.map((IconComponent, index) => (
+                  <Link to={IconComponent.to}>
                     <Icon
                       key={index}
-                      as={IconComponent}
+                      as={IconComponent.Icon}
                       boxSize={6}
                       cursor="pointer"
                       _hover={{ color: "brand.200" }}
                     />
-                  )
-                )}
+                  </Link>
+                ))}
               </Flex>
             </Box>
 
-            <Box flex={1} minW={{ base: "full", md: "200px" }}>
-              <Text fontSize="lg" fontWeight="bold" mb={4}>
+            <Box
+              flex={1}
+              minW={{ base: "full", md: "200px" }}
+              mb={{ base: 6, md: 0 }}
+            >
+              <Text
+                fontSize="xl"
+                fontWeight="bold"
+                mb={4}
+                textAlign={{ base: "center", md: "left" }}
+              >
                 Quick Links
               </Text>
-              <VStack align="start" spacing={3}>
+              <VStack align={{ base: "center", md: "start" }} spacing={3}>
                 {["Home", "About Us", "Services", "Contact Us"].map((link) => (
                   <Text
                     key={link}
-                    fontSize="sm"
+                    fontSize="md"
                     _hover={{ color: "brand.200", cursor: "pointer" }}
                   >
                     {link}
@@ -137,72 +123,92 @@ const Footer = () => {
               </VStack>
             </Box>
 
-            <Box flex={1} minW={{ base: "full", md: "200px" }}>
-              <Text fontSize="lg" fontWeight="bold" mb={4}>
+            <Box
+              flex={1}
+              minW={{ base: "full", md: "200px" }}
+              mb={{ base: 6, md: 0 }}
+            >
+              <Text
+                fontSize="xl"
+                fontWeight="bold"
+                mb={4}
+                textAlign={{ base: "center", md: "left" }}
+              >
                 Contact Us
               </Text>
-              <VStack align="start" spacing={3}>
-                <Text fontSize="sm">Email: info@goonguntutor.com</Text>
-                <Text fontSize="sm">Phone: +1 (123) 456-7890</Text>
-                <Text fontSize="sm">
+              <VStack align={{ base: "center", md: "start" }} spacing={3}>
+                <Text fontSize="md">Email: info@goonguntutor.com</Text>
+                <Text fontSize="md">Phone: +1 (123) 456-7890</Text>
+                <Text fontSize="md" textAlign={{ base: "center", md: "left" }}>
                   Address: 123 Tutor St, Education City, World
                 </Text>
               </VStack>
             </Box>
 
             <Box flex={1} minW={{ base: "full", md: "250px" }}>
-              <Text fontSize="lg" fontWeight="bold" mb={4}>
+              <Text
+                fontSize="xl"
+                fontWeight="bold"
+                mb={4}
+                textAlign={{ base: "center", md: "left" }}
+              >
                 Newsletter
               </Text>
-              <Text fontSize="sm" mb={4}>
+              <Text
+                fontSize="md"
+                mb={4}
+                textAlign={{ base: "center", md: "left" }}
+              >
                 Subscribe to our newsletter to get the latest updates and
                 offers.
               </Text>
-              <Flex>
+              <Stack direction={{ base: "column", sm: "row" }} spacing={0}>
                 <Input
                   placeholder="Your email"
                   bg="white"
                   color="black"
                   borderRadius="md"
-                  borderRightRadius={0}
+                  borderRightRadius={{ base: "md", sm: 0 }}
                   _focus={{ outline: "none" }}
+                  size="md"
                 />
                 <Button
                   bg="brand.600"
                   color="white"
                   borderRadius="md"
-                  borderLeftRadius={0}
+                  borderLeftRadius={{ base: "md", sm: 0 }}
                   _hover={{ bg: "brand.700" }}
                   px={6}
+                  width={{ base: "full", sm: "auto" }}
                 >
                   Subscribe
                 </Button>
-              </Flex>
+              </Stack>
             </Box>
           </Flex>
 
           <Box bg="brand.700" py={4} width="full">
             <Flex
-              direction={{ base: "column", md: "row" }}
+              direction={{ base: "column-reverse", md: "row" }}
               justify="center"
               align="center"
               maxW="1200px"
               mx="auto"
               px={4}
-              gap={2}
+              gap={{ base: 2, md: 4 }}
             >
-              <Text fontSize="sm">
+              <Text fontSize="md" mt={{ base: 2, md: 0 }}>
                 © {new Date().getFullYear()} Goongun Tutor. All rights reserved.
               </Text>
-              <Flex gap={4}>
+              <Flex gap={{ base: 2, md: 4 }}>
                 <Text
-                  fontSize="sm"
+                  fontSize="md"
                   _hover={{ color: "brand.200", cursor: "pointer" }}
                 >
                   Privacy Policy
                 </Text>
                 <Text
-                  fontSize="sm"
+                  fontSize="md"
                   _hover={{ color: "brand.200", cursor: "pointer" }}
                 >
                   Terms of Service
