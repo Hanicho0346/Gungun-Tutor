@@ -11,8 +11,11 @@ import {
   DrawerBody,
   VStack,
   useDisclosure,
+  Link,
+  List,
+  ListItem,
 } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import Logo from "../assets/Images/Logo Image.png";
 import background from "../assets/Images/Wave Lines.png";
 import { useMemo } from "react";
@@ -27,14 +30,14 @@ interface NavItem {
 const NavBar = () => {
   const { t, i18n } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const navbarWidth = useBreakpointValue({ base: "100%", md: "95%" });
+  const location = useLocation();
+  const navbarWidth = useBreakpointValue({ base: "100%", md: "90%" });
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   const navItems: NavItem[] = useMemo(
     () => [
       { label: t("home"), path: "/" },
       { label: t("about"), path: "/about" },
-      { label: t("services"), path: "/services" },
       { label: t("tutors"), path: "/tutors" },
       { label: t("contact"), path: "/contact" },
     ],
@@ -46,13 +49,15 @@ const NavBar = () => {
     i18n.changeLanguage(newLanguage);
   };
 
+  const isActive = (path: string) => location.pathname === path;
+
   return (
     <>
       <Flex
         as="nav"
         justifyContent="space-between"
         alignItems="center"
-        p={{ base: 3, md: 6 }}
+        p={{ base: 3, md: 8 }}
         background="white"
         color="white"
         width={navbarWidth}
@@ -64,8 +69,8 @@ const NavBar = () => {
         borderRadius={{ base: "none", md: "full" }}
         zIndex="sticky"
         height={{ base: "70px", md: "100px" }}
+        m={2}
       >
-        {/* Background for desktop view only */}
         {!isMobile && (
           <Box
             backgroundImage={`url(${background})`}
@@ -79,6 +84,7 @@ const NavBar = () => {
             bottom="0"
             opacity="1"
             borderRadius={{ base: "none", md: "full" }}
+            zIndex={-1}
           />
         )}
 
@@ -88,7 +94,7 @@ const NavBar = () => {
             src={Logo}
             boxSize={{ base: "40px", md: "90px" }}
             objectFit="contain"
-            alt="Logo"
+            alt="Company Logo"
             transition="all 0.2s ease"
             _hover={{
               transform: "scale(1.05)",
@@ -97,36 +103,48 @@ const NavBar = () => {
           />
         </NavLink>
 
-        {/* Desktop Navigation */}
-        <Flex
-          as="ul"
-          direction="row"
-          gap={{ base: 3, sm: 4, md: 8 }}
-          fontSize={{ base: "xs", sm: "sm", md: "md", lg: "lg", xl: "lg" }}
-          textColor="brand.500"
-          fontWeight="md"
-          listStyleType="none"
-          role="navigation"
-          display={{ base: "none", md: "flex" }}
-        >
-          {navItems.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              style={{
-                textDecoration: "none",
-                cursor: "pointer",
-                color: "inherit",
-              }}
-            >
-              <Box as="li" _hover={{ textDecoration: "underline" }}>
-                {item.label}
-              </Box>
-            </NavLink>
-          ))}
-        </Flex>
+        {!isMobile && (
+          <List
+            as="ul"
+            display="flex"
+            gap={{ base: 3, sm: 4, md: 8 }}
+            fontSize={{ base: "xs", sm: "sm", md: "md", lg: "lg", xl: "lg" }}
+            color="brand.500"
+            fontWeight="medium"
+            role="navigation"
+            aria-label="Main navigation"
+          >
+            {navItems.map((item) => (
+              <ListItem key={item.path}>
+                <Link
+                  as={NavLink}
+                  to={item.path}
+                  position="relative"
+                  _hover={{ textDecoration: "none" }}
+                  _after={{
+                    content: '""',
+                    position: "absolute",
+                    bottom: "-2px",
+                    left: 0,
+                    width: isActive(item.path) ? "100%" : "0%",
+                    height: "2px",
+                    bg: "brand.500",
+                    transition: "width 0.3s ease",
+                  }}
+                  _hover={{
+                    _after: {
+                      width: "100%",
+                    },
+                  }}
+                  color={isActive(item.path) ? "brand.600" : "brand.500"}
+                >
+                  {item.label}
+                </Link>
+              </ListItem>
+            ))}
+          </List>
+        )}
 
-        {/* Mobile Menu Button and Action Buttons */}
         <Flex alignItems="center" gap={{ base: 2, md: 3 }}>
           {isMobile && (
             <IconButton
@@ -147,6 +165,10 @@ const NavBar = () => {
             borderRadius="md"
             bg="brand.500"
             color="white"
+            _hover={{ bg: "brand.600" }}
+            aria-label={`Switch to ${
+              i18n.language === "en" ? "Amharic" : "English"
+            } language`}
           >
             {i18n.language === "en" ? "Am" : "En"}
           </Button>
@@ -159,20 +181,20 @@ const NavBar = () => {
                 color: "black",
               }}
               boxShadow="md"
-              textColor="brand.400"
+              color="brand.400"
               p={{ base: 3, md: 6 }}
-              background="linear-gradient(90deg, white, #FFD59A, white)"
+              bgGradient="linear(to-r, white, #FFD59A, white)"
               borderRadius="full"
               size={{ base: "sm", md: "md" }}
               fontSize={{ base: "xs", md: "md" }}
+              transition="all 0.3s ease"
             >
-              {t("findTutor")}
+              {t("SignUp")}
             </Button>
           </NavLink>
         </Flex>
       </Flex>
 
-      {/* Mobile Drawer */}
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -186,26 +208,32 @@ const NavBar = () => {
             />
           </Flex>
           <DrawerBody>
-            <VStack spacing={6} align="stretch" mt={10}>
+            <VStack
+              as="nav"
+              spacing={4}
+              align="stretch"
+              mt={10}
+              aria-label="Mobile navigation"
+            >
               {navItems.map((item) => (
-                <NavLink
+                <Link
                   key={item.path}
+                  as={NavLink}
                   to={item.path}
-                  style={{ textDecoration: "none", color: "inherit" }}
                   onClick={onClose}
+                  p={3}
+                  fontSize="lg"
+                  fontWeight="medium"
+                  color={isActive(item.path) ? "brand.600" : "brand.500"}
+                  bg={isActive(item.path) ? "gray.50" : "transparent"}
+                  borderRadius="md"
+                  _hover={{
+                    bg: "gray.50",
+                    textDecoration: "none",
+                  }}
                 >
-                  <Box
-                    p={3}
-                    fontSize="lg"
-                    fontWeight="medium"
-                    color="brand.500"
-                    borderBottom="1px solid"
-                    borderColor="gray.100"
-                    _hover={{ bg: "gray.50" }}
-                  >
-                    {item.label}
-                  </Box>
-                </NavLink>
+                  {item.label}
+                </Link>
               ))}
             </VStack>
           </DrawerBody>
