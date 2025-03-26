@@ -9,18 +9,25 @@ import {
   Avatar,
   Divider,
   useMediaQuery,
+  chakra,
+  shouldForwardProp,
 } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaLightbulb, FaCode, FaQuoteRight, FaCheck } from "react-icons/fa";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 
 import picture from "../assets/Images/Ethiopian Kids Children.png";
 import picture2 from "../assets/Images/One-on-One-Tutoring.jpg";
 import chat from "../assets/Images/chat.png";
 import { Link } from "react-router-dom";
+import { isValidMotionProp, motion } from "framer-motion";
+import AddisAbabaMap from "./AddisAbabaMap";
 
+const MotionBox = chakra(motion.div, {
+  shouldForwardProp: (prop) =>
+    isValidMotionProp(prop) || shouldForwardProp(prop),
+});
 const float = keyframes`
   0% { transform: translateY(0) rotate(-10deg); }
   50% { transform: translateY(-20px) rotate(-10deg); }
@@ -41,7 +48,7 @@ const rotate = keyframes`
 const HOVER_BOX_WIDTH = { base: "100%", md: "23%" };
 const IMAGE_SIZES = { base: "250px", md: "400px", lg: "500px" };
 
-const HoverBox = ({ icon, title, description, color }) => {
+const HoverBox = ({ icon, title, description, color, }) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -185,7 +192,7 @@ const FeatureItem = ({ text }) => {
       flexDir="row"
       alignItems="center"
       gap={5}
-      mt={isMobile ? 5 : 10}
+      mt={isMobile ? 5 : 6}
       w={isMobile ? "100%" : "auto"}
     >
       <Box
@@ -242,24 +249,13 @@ const Main = () => {
     "Progress Tracking",
   ];
 
-  const containerStyle = {
-    width: "100%",
-    height: "450px",
-  };
-
-  const center = {
-    lat: 9.022736,
-    lng: 38.749999,
-  };
-
   return (
     <Box width="100%" overflow="hidden" px={isMobile ? 4 : 8}>
-      {/* Hero Section */}
       <Flex
         flexDir={{ base: "column", md: "row" }}
         alignItems="center"
         justifyContent="space-between"
-        mt={{ base: 20, md: 52 }}
+        mt={{ base: 20, md: 28 }}
         px={isMobile ? 0 : 7}
       >
         <Flex
@@ -606,17 +602,75 @@ const Main = () => {
           </Flex>
         </Flex>
       </Flex>
-
-      <Box width="100%" mt={10} px={isMobile ? 0 : 4}>
-        <LoadScript googleMapsApiKey="YOUR_API_KEY">
-          <GoogleMap
-            mapContainerStyle={containerStyle}
-            center={center}
-            zoom={15}
+      <Box>
+        <Text fontSize={"3xl"} color={"brand.400"} fontWeight={"bold"} align={"center"} my={5}>
+          How We Work
+        </Text>
+      </Box>
+      <Flex flexDir={"row"} justify={"center"} gap={4}>
+        <HoverBox
+          icon={FaLightbulb}
+          title="Business Ideas"
+          description="Based on client needs, we will provide some good business solutions."
+          color="white"
+        />
+        <HoverBox
+          icon={FaLightbulb}
+          title="Business Ideas"
+          description="Based on client needs, we will provide some good business solutions."
+          color="white"
+        />
+        <HoverBox
+          icon={FaLightbulb}
+          title="Business Ideas"
+          description="Based on client needs, we will provide some good business solutions."
+          color="white"
+        />
+      </Flex>
+      <Box as="section" mt={{ base: 16, md: 24 }} textAlign="center">
+        <MotionBox
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Text fontSize="3xl" fontWeight="bold" color="brand.400" mb={4}>
+            Where We've Tutored
+          </Text>
+          <Text fontSize={"lg"} color="gray.500" maxW="4xl" mx="auto" px={4}>
+            Our dedicated tutors serve students across Ethiopia, bringing
+            quality education to every corner.
+          </Text>
+          <Text
+            fontSize="md"
+            lineHeight="tall"
+            color="gray.500"
+            maxW="2xl"
+            mx="auto"
+            px={4}
           >
-            <Marker position={center} />
-          </GoogleMap>
-        </LoadScript>
+            Our network of qualified tutors spans across Ethiopia, providing
+            comprehensive educational support to students in need of quality
+            learning opportunities.
+          </Text>
+        </MotionBox>
+
+        <Flex
+          flexDir={{ base: "column", md: "row" }}
+          justifyContent="space-between"
+          alignItems="center"
+          mt={10}
+          gap={8}
+        >
+          <MotionBox
+            width="100%"
+            maxWidth={{ base: "100%", md: "100%" }}
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <AddisAbabaMap />
+          </MotionBox>
+        </Flex>
       </Box>
     </Box>
   );
