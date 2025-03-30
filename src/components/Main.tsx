@@ -23,6 +23,7 @@ import chat from "../assets/Images/chat.png";
 import { Link } from "react-router-dom";
 import { isValidMotionProp, motion } from "framer-motion";
 import AddisAbabaMap from "./AddisAbabaMap";
+import pcscreen from "../assets/Images/pcscreen.png";
 
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
@@ -48,7 +49,7 @@ const rotate = keyframes`
 const HOVER_BOX_WIDTH = { base: "100%", md: "23%" };
 const IMAGE_SIZES = { base: "250px", md: "400px", lg: "500px" };
 
-const HoverBox = ({ icon, title, description, color, }) => {
+const HoverBox = ({ icon, title, description, color }) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -248,6 +249,58 @@ const Main = () => {
     "Flexible Scheduling",
     "Progress Tracking",
   ];
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+  
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
+  
+  const featureCardVariants = {
+    hover: {
+      y: -5,
+      boxShadow: "0 10px 20px rgba(0,0,0,0.1)",
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+  
+    const featuresforScreen = [
+      {
+        number: "1",
+        title: "Talk face-to-face",
+        description:
+          "Students and tutors see each other via live video – great for building rapport",
+      },
+      {
+        number: "2",
+        title: "Share and collaborate",
+        description:
+          "Upload essays or past papers, and work through examples together on the whiteboard",
+      },
+      {
+        number: "3",
+        title: "Rewatch lessons",
+        description:
+          "Lessons are recorded, so students can watch them later for revision",
+      },
+    ];
 
   return (
     <Box width="100%" overflow="hidden" px={isMobile ? 4 : 8}>
@@ -602,31 +655,103 @@ const Main = () => {
           </Flex>
         </Flex>
       </Flex>
-      <Box>
-        <Text fontSize={"3xl"} color={"brand.400"} fontWeight={"bold"} align={"center"} my={5}>
+      <Flex
+      as={motion.div}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, margin: "-100px" }}
+      variants={containerVariants}
+      flexDirection="column"
+      justifyContent="center"
+      alignItems="center"
+      gap={4} 
+      py={6} 
+      px={4}
+    >
+      <Box 
+        as={motion.div}
+        variants={itemVariants}
+        textAlign="center" 
+        maxWidth="2xl"
+        mb={2} 
+      >
+        <Text
+          fontSize={{ base: "2xl", md: "4xl" }}
+          color="brand.400"
+          fontWeight="bold"
+          mb={2} 
+        >
           How We Work
         </Text>
+        <Text fontSize={{ base: "sm", md: "lg" }} color="gray.500">
+          Lessons to fit your schedule, from the comfort of home
+        </Text>
       </Box>
-      <Flex flexDir={"row"} justify={"center"} gap={4}>
-        <HoverBox
-          icon={FaLightbulb}
-          title="Business Ideas"
-          description="Based on client needs, we will provide some good business solutions."
-          color="white"
-        />
-        <HoverBox
-          icon={FaLightbulb}
-          title="Business Ideas"
-          description="Based on client needs, we will provide some good business solutions."
-          color="white"
-        />
-        <HoverBox
-          icon={FaLightbulb}
-          title="Business Ideas"
-          description="Based on client needs, we will provide some good business solutions."
-          color="white"
-        />
+
+      <Image
+        as={motion.img}
+        variants={itemVariants}
+        src={pcscreen}
+        width={{ base: "90%", md: "80%", lg: "3xl" }}
+        maxWidth="800px"
+        objectFit="contain"
+        alt="PC Screen"
+      />
+
+      <Flex
+        as={motion.div}
+        variants={containerVariants}
+        flexDirection={{ base: "column", md: "row" }}
+        justifyContent="center"
+        alignItems={{ base: "center", md: "flex-start" }}
+        gap={{ base: 4, md: 28 }}
+        maxWidth="6xl"
+        px={2} 
+        flexWrap="wrap"
+        mt={2} 
+      >
+        {featuresforScreen.map((feature, index) => (
+          <Flex
+            as={motion.div}
+            key={index}
+            variants={itemVariants}
+            whileHover="hover"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            flexDirection="column"
+            alignItems="center"
+            textAlign="center"
+            width={{ base: "100%", md: "300px" }}
+            gap={2} 
+            p={6} 
+            bg="white"
+            variants={featureCardVariants}
+          >
+            <Flex
+              justifyContent="center"
+              alignItems="center"
+              width="50px"
+              height="50px"
+              borderRadius="full"
+              bg="green.500"
+              color="white"
+              fontSize="xl"
+              fontWeight="bold"
+              mb={2}
+            >
+              {feature.number}
+            </Flex>
+            <Text fontSize="lg" fontWeight="semibold" color="gray.700">
+              {feature.title}
+            </Text>
+            <Text fontSize="md" color="gray.500">
+              {feature.description}
+            </Text>
+          </Flex>
+        ))}
       </Flex>
+    </Flex>
       <Box as="section" mt={{ base: 16, md: 24 }} textAlign="center">
         <MotionBox
           initial={{ opacity: 0 }}

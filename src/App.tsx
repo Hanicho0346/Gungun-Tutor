@@ -1,5 +1,4 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
 import Blog from "./components/Blog";
 import ContactUs from "./components/ContactUs";
@@ -9,85 +8,77 @@ import NotFound from "./components/NotFound";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import About from "./components/About";
+import { useLocation } from "react-router-dom";
+import TutorDashboard from "./components/TutorDashboard";
+import StudentDashboard from "./components/StudentDashboard";
 
-function Layout({ children }: { children: React.ReactNode }) {
+function Layout() {
   const location = useLocation();
   const isNotFoundPage = location.pathname === "/not-found";
+  const issignUp=location.pathname==="/signup"
+  const isDashboard=location.pathname==="/tutor-dashboard"||"/student-dashboard";
 
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
-      {!isNotFoundPage && <NavBar />}
+      {!isNotFoundPage &&!issignUp&&!isDashboard && <NavBar />}
       <Box flex="1" w="100%">
-        {children}
+        <Outlet />
       </Box>
-      {!isNotFoundPage && <Footer />}
+      {!isNotFoundPage&&!issignUp && <Footer />}
     </Box>
   );
 }
 
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Main />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
+        path: "/contact",
+        element: <ContactUs />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/signup",
+        element: <SignUp />,
+      },
+      {
+        path: "/not-found",
+        element: (
+          <Box minH="100vh">
+            <NotFound />
+          </Box>
+        ),
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+      {
+        path:"/tutor-dashboard", 
+       element:<TutorDashboard/>
+      },
+      {
+        path:"/student-dashboard",
+        element:<StudentDashboard/>
+      }
+    ],
+  },
+]);
+
 function App() {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <Main />
-            </Layout>
-          }
-        />
-        <Route
-          path="/blog"
-          element={
-            <Layout>
-              <Blog />
-            </Layout>
-          }
-        />
-        <Route
-          path="/contact"
-          element={
-            <Layout>
-              <ContactUs />
-            </Layout>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <Layout>
-              <About />
-            </Layout>
-          }
-        />
-        <Route
-          path="/signup"
-          element={
-            <Layout>
-              <SignUp />
-            </Layout>
-          }
-        />
-        <Route
-          path="/not-found"
-          element={
-            <Box minH="100vh">
-              <NotFound />
-            </Box>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <Layout>
-              <NotFound />
-            </Layout>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;

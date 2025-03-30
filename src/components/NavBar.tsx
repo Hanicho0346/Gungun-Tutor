@@ -14,23 +14,28 @@ import {
   Link,
   List,
   ListItem,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
 } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCallback, useMemo } from "react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import logo  from "../assets/Images/Logo Image.png"
+import logo from "../assets/Images/Logo Image.png";
 
 interface NavItem {
   label: string;
   path: string;
+  isPopover?: boolean;
 }
 
 const NavBar = () => {
   const { t, i18n } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const location = useLocation();
-  
+
   const isMobile = useBreakpointValue({ base: true, md: false });
   const navbarWidth = useBreakpointValue({ base: "100%", md: "95%" });
 
@@ -38,7 +43,7 @@ const NavBar = () => {
     () => [
       { label: t("home"), path: "/" },
       { label: t("about"), path: "/about" },
-      { label: t("tutors"), path: "/tutors" },
+      { label: t("tutors"), path: "/tutors", isPopover: true },
       { label: t("contact"), path: "/contact" },
     ],
     [t]
@@ -71,7 +76,7 @@ const NavBar = () => {
         height={{ base: "70px", md: "100px" }}
         m={2}
       >
-        {/* Background wave pattern - only visible on desktop */}
+     
         {!isMobile && (
           <Box
             backgroundImage="url(/wave-lines.png)"
@@ -114,38 +119,83 @@ const NavBar = () => {
           >
             {navItems.map((item) => (
               <ListItem key={item.path}>
-                <Link
-                  as={NavLink}
-                  to={item.path}
-                  position="relative"
-                  _hover={{ textDecoration: "none" }}
-                  _after={{
-                    content: '""',
-                    position: "absolute",
-                    bottom: "-2px",
-                    left: 0,
-                    width: isActive(item.path) ? "100%" : "0%",
-                    height: "2px",
-                    bg: "brand.500",
-                    transition: "width 0.3s ease",
-                  }}
-                  _hover={{
-                    _after: {
-                      width: "100%",
-                    },
-                  }}
-                  color={isActive(item.path) ? "brand.600" : "brand.500"}
-                >
-                  {item.label}
-                </Link>
+                {item.isPopover ? (
+                  <Popover trigger="hover" placement="bottom">
+                    <PopoverTrigger>
+                      <Link
+                        as={Link}
+                        to="/signup" 
+                        variant="link"
+                        position="relative"
+                      >
+                        {item.label}
+                      </Link>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      width="auto"
+                      border="none"
+                      boxShadow="lg"
+                      borderRadius="lg"
+                      bg="white"
+                    >
+                      <PopoverBody p={2}>
+                        <VStack spacing={2} align="stretch">
+                          <Button
+                            as={NavLink}
+                             to="/signup?role=tutor"
+                            variant="ghost"
+                            colorScheme="brand"
+                            size="sm"
+                            _hover={{ bg: "brand.50" }}
+                          >
+                            {t("Become Tutor")}
+                          </Button>
+                          <Button
+                            as={NavLink}
+                            to="/signup?role=student"
+                            variant="ghost"
+                            colorScheme="brand"
+                            size="sm"
+                            _hover={{ bg: "brand.50" }}
+                          >
+                            {t("Find Tutor")}
+                          </Button>
+                        </VStack>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Popover>
+                ) : (
+                  <Link
+                    as={NavLink}
+                    to={item.path}
+                    position="relative"
+                    _hover={{ textDecoration: "none" }}
+                    _after={{
+                      content: '""',
+                      position: "absolute",
+                      bottom: "-2px",
+                      left: 0,
+                      width: isActive(item.path) ? "100%" : "0%",
+                      height: "2px",
+                      bg: "brand.500",
+                      transition: "width 0.3s ease",
+                    }}
+                    _hover={{
+                      _after: {
+                        width: "100%",
+                      },
+                    }}
+                    color={isActive(item.path) ? "brand.600" : "brand.500"}
+                  >
+                    {item.label}
+                  </Link>
+                )}
               </ListItem>
             ))}
           </List>
         )}
 
-        {/* Right-side buttons */}
         <Flex align="center" gap={{ base: 2, md: 3 }}>
-          {/* Mobile menu button */}
           {isMobile && (
             <IconButton
               aria-label="Open menu"
@@ -158,7 +208,7 @@ const NavBar = () => {
             />
           )}
 
-          {/* Language toggle */}
+
           <Button
             onClick={toggleLanguage}
             size={{ base: "sm", md: "md" }}
@@ -173,9 +223,7 @@ const NavBar = () => {
           >
             {i18n.language === "en" ? "Am" : "En"}
           </Button>
-
-          {/* CTA Button */}
-          <NavLink to="/find-tutor" aria-label="Find Your Tutor">
+          <NavLink to="/signup" aria-label="Find Your Tutor">
             <Button
               _hover={{
                 boxShadow: "lg",
@@ -191,13 +239,12 @@ const NavBar = () => {
               size={{ base: "sm", md: "md" }}
               fontSize={{ base: "xs", md: "md" }}
             >
-              {t("findTutor")}
+              {t("SignUp")}
             </Button>
           </NavLink>
         </Flex>
       </Flex>
 
-      {/* Mobile Drawer */}
       <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
         <DrawerContent>
@@ -219,24 +266,72 @@ const NavBar = () => {
               aria-label="Mobile navigation"
             >
               {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  as={NavLink}
-                  to={item.path}
-                  onClick={onClose}
-                  p={3}
-                  fontSize="lg"
-                  fontWeight="medium"
-                  color={isActive(item.path) ? "brand.600" : "brand.500"}
-                  bg={isActive(item.path) ? "gray.50" : "transparent"}
-                  borderRadius="md"
-                  _hover={{
-                    bg: "gray.50",
-                    textDecoration: "none",
-                  }}
-                >
-                  {item.label}
-                </Link>
+                <Box key={item.path}>
+                  {item.isPopover ? (
+                    <>
+                      <Link
+                        as={NavLink}
+                        to="/become-tutor"
+                        onClick={onClose}
+                        p={3}
+                        fontSize="lg"
+                        fontWeight="medium"
+                        color={
+                          isActive("/become-tutor") ? "brand.600" : "brand.500"
+                        }
+                        bg={
+                          isActive("/become-tutor") ? "gray.50" : "transparent"
+                        }
+                        borderRadius="md"
+                        _hover={{
+                          bg: "gray.50",
+                          textDecoration: "none",
+                        }}
+                        display="block"
+                      >
+                        {t("Become Tutor")}
+                      </Link>
+                      <Link
+                        as={NavLink}
+                        to="/find-tutor"
+                        onClick={onClose}
+                        p={3}
+                        fontSize="lg"
+                        fontWeight="medium"
+                        color={
+                          isActive("/find-tutor") ? "brand.600" : "brand.500"
+                        }
+                        bg={isActive("/find-tutor") ? "gray.50" : "transparent"}
+                        borderRadius="md"
+                        _hover={{
+                          bg: "gray.50",
+                          textDecoration: "none",
+                        }}
+                        display="block"
+                      >
+                        {t("Find Tutor")}
+                      </Link>
+                    </>
+                  ) : (
+                    <Link
+                      as={NavLink}
+                      to={item.path}
+                      onClick={onClose}
+                      p={3}
+                      fontSize="lg"
+                      fontWeight="medium"
+                      color={isActive(item.path) ? "brand.600" : "brand.500"}
+                      bg={isActive(item.path) ? "gray.50" : "transparent"}
+                      borderRadius="md"
+                      _hover={{
+                        bg: "gray.50",
+                        textDecoration: "none",
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  )}
+                </Box>
               ))}
             </VStack>
           </DrawerBody>
