@@ -1,4 +1,4 @@
-# GitHub Tutorial Project
+# Tutorial Project
 
 ## Overview
 
