@@ -115,7 +115,6 @@ const AuthForm = () => {
   };
 
   const navigateToDashboard = (role: UserRole) => {
-   
     localStorage.setItem("userRole", role);
 
     navigate(role === "tutor" ? "/tutor-dashboard" : "/student-dashboard");
@@ -130,16 +129,16 @@ const AuthForm = () => {
       if (!storedData) {
         throw new Error("User not found.");
       }
-      
+
       const { userData, role } = JSON.parse(storedData);
-      
+
       if (userData.password !== values.password) {
         throw new Error("Incorrect password.");
       }
 
       const token = "fake_token_for_" + values.email;
       localStorage.setItem("authToken", token);
-      localStorage.setItem("userEmail", values.email); 
+      localStorage.setItem("userEmail", values.email);
 
       toast({
         title: "Logged in successfully",
@@ -169,7 +168,6 @@ const AuthForm = () => {
     actions: FormikHelpers<SignupFormValues>
   ) => {
     try {
-  
       if (localStorage.getItem(`user_${values.email}`)) {
         throw new Error("User with this email already exists.");
       }
@@ -181,8 +179,7 @@ const AuthForm = () => {
         password: values.password,
         role: values.role,
       };
-      
- 
+
       localStorage.setItem(
         `user_${values.email}`,
         JSON.stringify({
@@ -193,7 +190,7 @@ const AuthForm = () => {
 
       const token = "fake_token_for_" + values.email;
       localStorage.setItem("authToken", token);
-      localStorage.setItem("userEmail", values.email); 
+      localStorage.setItem("userEmail", values.email);
 
       toast({
         title: "Account created",
@@ -226,7 +223,7 @@ const AuthForm = () => {
       overflow="hidden"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
+      transition="all 0.3s ease-in-out"
     >
       <Box
         as={motion.div}
@@ -238,7 +235,7 @@ const AuthForm = () => {
         order={{ md: isLogin ? 2 : 1 }}
         initial={{ x: isLogin ? -50 : 0, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 100, damping: 10 }}
+        transition={{ type: "spring", stiffness: 100, damping: 10 } as any}
       >
         <Box maxW="md" mx="auto" w="100%">
           <AnimatePresence mode="wait">
@@ -254,7 +251,12 @@ const AuthForm = () => {
                   <Heading as="h1" size="xl" mb={6} textAlign="center">
                     Welcome Back
                   </Heading>
-                  <Text fontSize="lg" mb={8} textAlign="center" color="gray.500">
+                  <Text
+                    fontSize="lg"
+                    mb={8}
+                    textAlign="center"
+                    color="gray.500"
+                  >
                     Log in to continue your journey
                   </Text>
 
@@ -387,7 +389,12 @@ const AuthForm = () => {
                   <Heading as="h1" size="xl" mb={6} textAlign="center">
                     Create Your Account
                   </Heading>
-                  <Text fontSize="lg" mb={8} textAlign="center" color="gray.500">
+                  <Text
+                    fontSize="lg"
+                    mb={8}
+                    textAlign="center"
+                    color="gray.500"
+                  >
                     Join our community and start your journey
                   </Text>
 
@@ -630,7 +637,7 @@ const AuthForm = () => {
         key="green-panel"
         initial={{ x: isLogin ? -50 : 50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 100, damping: 10 }}
+        transition={{ type: "spring", stiffness: 100, damping: 10 } as any}
       >
         <Box
           position="absolute"

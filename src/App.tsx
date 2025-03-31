@@ -1,6 +1,5 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
-import Blog from "./components/Blog";
 import ContactUs from "./components/ContactUs";
 import SignUp from "./components/SignUp";
 import Main from "./components/Main";
@@ -16,11 +15,10 @@ function Layout() {
   const location = useLocation();
   const isNotFoundPage = location.pathname === "/not-found";
   const issignUp=location.pathname==="/signup"
-  const isDashboard=location.pathname==="/tutor-dashboard"||"/student-dashboard";
 
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
-      {!isNotFoundPage &&!issignUp&&!isDashboard && <NavBar />}
+      {!isNotFoundPage &&!issignUp && <NavBar />}
       <Box flex="1" w="100%">
         <Outlet />
       </Box>
@@ -36,10 +34,6 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Main />,
-      },
-      {
-        path: "/blog",
-        element: <Blog />,
       },
       {
         path: "/contact",

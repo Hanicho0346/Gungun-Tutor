@@ -197,7 +197,7 @@ const AddisAbabaMap = () => {
         style={{ height: "500px", width: "100%", borderRadius: "8px" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
+        transition="0.3s ease"
       >
         <MapContainer
           center={centerPosition}
