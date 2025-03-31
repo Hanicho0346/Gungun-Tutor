@@ -76,7 +76,6 @@ const NavBar = () => {
         height={{ base: "70px", md: "100px" }}
         m={2}
       >
-     
         {!isMobile && (
           <Box
             backgroundImage="url(/wave-lines.png)"
@@ -123,10 +122,9 @@ const NavBar = () => {
                   <Popover trigger="hover" placement="bottom">
                     <PopoverTrigger>
                       <Link
-                        as={Link}
-                        to="/signup" 
+                        href="/signup"
                         variant="link"
-                        position="relative"
+                        style={{ position: "relative" }}
                       >
                         {item.label}
                       </Link>
@@ -142,7 +140,7 @@ const NavBar = () => {
                         <VStack spacing={2} align="stretch">
                           <Button
                             as={NavLink}
-                             to="/signup?role=tutor"
+                            to="/signup?role=tutor"
                             variant="ghost"
                             colorScheme="brand"
                             size="sm"
@@ -169,7 +167,6 @@ const NavBar = () => {
                     as={NavLink}
                     to={item.path}
                     position="relative"
-                    _hover={{ textDecoration: "none" }}
                     _after={{
                       content: '""',
                       position: "absolute",
@@ -181,6 +178,7 @@ const NavBar = () => {
                       transition: "width 0.3s ease",
                     }}
                     _hover={{
+                      textDecoration: "none",
                       _after: {
                         width: "100%",
                       },
@@ -207,7 +205,6 @@ const NavBar = () => {
               mr={1}
             />
           )}
-
 
           <Button
             onClick={toggleLanguage}
