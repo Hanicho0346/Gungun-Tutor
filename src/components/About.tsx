@@ -171,6 +171,7 @@ const About = () => {
           </Flex>
         </Box>
       </Box>
+      <Box>
       <Flex dir="row" width={"100%"}>
         <Box width={"100%"} maxW={"70%"} marginLeft={"200px"} marginTop="100px">
           <Flex width={"100%"} overflow={"hidden"} marginBottom={"30px"}>
@@ -224,6 +225,7 @@ const About = () => {
           maxWidth={"30%"}
         />
       </Flex>
+      </Box>
       <Box marginTop={"100px"} position="relative" w={"100%"} py={16}>
         <VStack
           position="relative"
@@ -294,16 +296,23 @@ const About = () => {
             alignItems="flex-start"
           >
             <Flex gap={4} alignItems="flex-start">
-              <Image
-                src={USER}
+              <Box
+                position="relative"
                 width={20}
                 height={20}
-                mt={1}
                 transition="transform 0.3s ease"
                 _hover={{
-                  transform: "translateX(-5px)"
+                  transform: "rotateY(180deg)",
                 }}
-              />
+              >
+                <Image
+                  src={USER}
+                  width={20}
+                  height={20}
+                  mt={1}
+                  transition="transform 0.2s ease"
+                />
+              </Box>
               <VStack align="flex-start" spacing={2}>
                 <Text fontWeight="bold" fontSize="2xl">
                   Creative Ideas
@@ -320,16 +329,23 @@ const About = () => {
               </VStack>
             </Flex>
             <Flex gap={4} alignItems="flex-start">
-              <Image
-                src={PHONE}
+              <Box
+                position="relative"
                 width={20}
                 height={20}
-                mt={1}
+                transition="transform 0.3s ease"
                 _hover={{
-                  animation:
-                    "moveRightToLeft 0.5s ease-in-out infinite alternate",
+                  transform: "rotateY(180deg)",
                 }}
-              />
+              >
+                <Image
+                  src={PHONE}
+                  width={20}
+                  height={20}
+                  mt={1}
+                  transition="transform 0.2s ease"
+                />
+              </Box>
               <VStack align="flex-start" spacing={2}>
                 <Text fontWeight="bold" fontSize="2xl" lineHeight="short">
                   Creative Ideas
@@ -346,16 +362,23 @@ const About = () => {
               </VStack>
             </Flex>
             <Flex gap={4} alignItems="flex-start">
-              <Image
-                src={LIKE}
+              <Box
+                position="relative"
                 width={20}
                 height={20}
-                mt={1}
+                transition="transform 0.3s ease"
                 _hover={{
-                  animation:
-                    "moveRightToLeft 0.5s ease-in-out infinite alternate",
+                  transform: "rotateY(180deg)",
                 }}
-              />
+              >
+                <Image
+                  src={LIKE}
+                  width={20}
+                  height={20}
+                  mt={1}
+                  transition="transform 0.2s ease"
+                />
+              </Box>
               <VStack align="flex-start" spacing={2}>
                 <Text fontWeight="bold" fontSize="2xl" lineHeight="short">
                   Creative Ideas
