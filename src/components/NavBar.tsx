@@ -152,7 +152,7 @@ const NavBar = () => {
                           </Button>
                           <Button
                             as={NavLink}
-                            to="/signup?role=student"
+                            to="/findtutor"
                             variant="ghost"
                             colorScheme="brand"
                             size="sm"

@@ -7,6 +7,7 @@ import {
   Heading,
   Button,
   HStack,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import BgImage from "../assets/Images/gungun9.jpg";
 import { AiFillHome, AiOutlineRight } from "react-icons/ai";
@@ -80,6 +81,10 @@ const Count = () => {
     };
   }, [targetClients, targetLocations]);
 
+  const buttonSize = useBreakpointValue({ base: "150px", md: "170px" });
+  const fontSize = useBreakpointValue({ base: "2xl", md: "3xl" });
+  const labelSize = useBreakpointValue({ base: "lg", md: "xl" });
+
   return (
     <Flex
       ref={countRef}
@@ -92,48 +97,57 @@ const Count = () => {
       <VStack>
         <Button
           background={"green.400"}
-          width={"170px"}
+          width={buttonSize}
           height={"80px"}
           borderRadius={"50px"}
           color="white"
-          fontSize={"3xl"}
+          fontSize={fontSize}
           _hover={{ background: "brand.500" }}
         >
           <Text fontWeight="bold">{clientCount}</Text>
           <Text fontWeight={"bold"}>+</Text>
         </Button>
-        <Text fontSize="xl" color="orange.300">
+        <Text fontSize={labelSize} color="orange.300">
           Clients
         </Text>
       </VStack>
       <VStack>
         <Button
           background={"green.400"}
-          width={"170px"}
+          width={buttonSize}
           height={"80px"}
           borderRadius={"50px"}
           color={"white"}
-          fontSize={"3xl"}
+          fontSize={fontSize}
           _hover={{ background: "brand.500" }}
         >
           <Text fontWeight="bold">{locationCount}</Text>
           <Text fontWeight={"bold"}>+</Text>
         </Button>
-        <Text fontSize="xl" color="orange.300">
+        <Text fontSize={labelSize} color="orange.300">
           Location
         </Text>
       </VStack>
     </Flex>
   );
 };
+
 const About = () => {
   const floatAnimation = `${float} 4s ease-in-out infinite`;
   const droplets = Array.from({ length: 70 }, (_, i) => i);
+
+  const isMobile = useBreakpointValue({ base: true, md: false });
+  const headingSize = useBreakpointValue({ base: "3xl", md: "5xl" });
+  const subTextSize = useBreakpointValue({ base: "18px", md: "21px" });
+  const videoHeight = useBreakpointValue({ base: "250px", md: "400px" });
+  const heroHeight = useBreakpointValue({ base: "40vh", md: "60vh" });
+  const bottomSectionHeight = useBreakpointValue({ base: "30vh", md: "35vh" });
+
   return (
-    <VStack overflow={"hidden"}>
+    <VStack overflow={"hidden"} spacing={0}>
       <Box
         w="100vw"
-        h="60vh"
+        h={heroHeight}
         bgImage={`linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${BgImage})`}
         bgSize="cover"
         bgRepeat="no-repeat"
@@ -141,13 +155,22 @@ const About = () => {
         display="flex"
         alignItems="center"
         justifyContent="center"
-        p={10}
+        p={4}
       >
-        <Box display="flex" flexDirection="column" marginTop={60}>
-          <Text fontWeight={650} fontSize={40} color="white">
+        <Box
+          display="flex"
+          flexDirection="column"
+          marginTop={isMobile ? 40 : 60}
+        >
+          <Text
+            fontWeight={650}
+            fontSize={{ base: "30px", md: "40px" }}
+            color="white"
+            textAlign="center"
+          >
             About
           </Text>
-          <Flex dir="row" gap={3}>
+          <Flex dir="row" gap={3} justifyContent="center">
             <NavLink to={"/"} style={{ textDecoration: "none" }}>
               <AiFillHome
                 size={20}
@@ -161,7 +184,7 @@ const About = () => {
               style={{ marginTop: "13px" }}
             />
             <Text
-              fontSize={15}
+              fontSize={{ base: "12px", md: "15px" }}
               fontWeight={"bold"}
               color="gray.300"
               style={{ marginTop: "10px" }}
@@ -171,88 +194,76 @@ const About = () => {
           </Flex>
         </Box>
       </Box>
-      <Box>
-      <Flex dir="row" width={"100%"}>
-        <Box width={"100%"} maxW={"70%"} marginLeft={"200px"} marginTop="100px">
-          <Flex width={"100%"} overflow={"hidden"} marginBottom={"30px"}>
-            <Image src={GROUP} alt="about" width="110px" height="110px" />
-          </Flex>
-          <Flex width={"100%"} color={"orange.300"} marginBottom={"20px"}>
-            <Text fontSize={20} fontWeight={400}>
-              ABOUT OUR COMPANY
-            </Text>
-          </Flex>
-          <Flex width={"100%"} mt={5}>
-            <Heading
-              fontFamily={"'Poppins', sans-serif"}
-              bgGradient="linear(to-r, brand.500, orange.400)"
-              bgClip="text"
-              fontWeight="bold"
-              fontSize="5xl"
-            >
-              We are a team of experts
-              <br /> creating engaging tutorials.
-            </Heading>
-          </Flex>
-          <Flex width={"100%"} mt={5}>
-            <Text
-              fontFamily="Pacifico, cursive"
-              fontSize={"21px"}
-              color={"gray.400"}
-            >
-              Experience personalized home-to-home tutoring with expert female
-              <br />
-              tutors, designed to empower women in a safe and supportive
-              environment.
-              <br />
-              Achieve your goals with flexible schedules and tailored lessons,
-              <br />
-              right at your doorstep!
-            </Text>
-          </Flex>
-          <Flex dir="row" gap={5} marginLeft={"100px"} mt={5}>
-            <Count />
-          </Flex>
-        </Box>
-        <Image
-          src={KID}
-          alt="about"
-          width="500px"
-          height="500px"
-          animation={floatAnimation}
-          marginRight={"300px"}
-          marginTop={"150px"}
-          maxWidth={"30%"}
-        />
-      </Flex>
-      </Box>
-      <Box marginTop={"100px"} position="relative" w={"100%"} py={16}>
-        <VStack
-          position="relative"
-          w={"100%"}
-          zIndex={1}
-          spacing={4}
-          mx="auto"
-          px={4}
-          textAlign="center"
-          bg="blue.50"
-          _before={{
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            background: `
-            radial-gradient(circle at center, 
-              rgba(255, 179, 71, 0.1) 0%, 
-              transparent 70%
-            ),
-            linear-gradient(to bottom right, 
-              transparent 60%, 
-              rgba(255, 179, 71, 0.05) 100%
-            )`,
-            zIndex: 0,
-          }}
+      <Box w="100%" px={{ base: 4, md: 8 }} maxW="1400px" mx="auto">
+        <Flex
+          direction={{ base: "column-reverse", md: "row" }}
+          width={"100%"}
+          alignItems="center"
+          justifyContent="space-between"
+          py={{ base: 8, md: 16 }}
         >
-          <Image src={BOOK} width={"140px"} height={"80px"} mt={20} />
+          <Box
+            width={{ base: "100%", md: "50%" }}
+            pr={{ md: 8 }}
+            mt={{ base: 8, md: 0 }}
+          >
+            <Flex width={"100%"} overflow={"hidden"} marginBottom={"30px"}>
+              <Image src={GROUP} alt="about" width="110px" height="110px" />
+            </Flex>
+            <Flex width={"100%"} color={"orange.300"} marginBottom={"20px"}>
+              <Text fontSize={{ base: "16px", md: "20px" }} fontWeight={400}>
+                ABOUT OUR COMPANY
+              </Text>
+            </Flex>
+            <Flex width={"100%"} mt={5}>
+              <Heading
+                fontFamily={"'Poppins', sans-serif"}
+                bgGradient="linear(to-r, brand.500, orange.400)"
+                bgClip="text"
+                fontWeight="bold"
+                fontSize={headingSize}
+                lineHeight="1.2"
+              >
+                We are a team of experts creating engaging tutorials.
+              </Heading>
+            </Flex>
+            <Flex width={"100%"} mt={5}>
+              <Text
+                fontFamily="Pacifico, cursive"
+                fontSize={subTextSize}
+                color={"gray.400"}
+              >
+                Experience personalized home-to-home tutoring with expert female
+                tutors, designed to empower women in a safe and supportive
+                environment. Achieve your goals with flexible schedules and
+                tailored lessons, right at your doorstep!
+              </Text>
+            </Flex>
+            <Flex
+              dir="row"
+              gap={5}
+              mt={5}
+              justifyContent={{ base: "center", md: "flex-start" }}
+            >
+              <Count />
+            </Flex>
+          </Box>
+
+          <Box width={{ base: "100%", md: "40%" }} mt={{ base: 4, md: 0 }}>
+            <Image
+              src={KID}
+              alt="about"
+              width="100%"
+              maxW="500px"
+              mx="auto"
+              animation={floatAnimation}
+            />
+          </Box>
+        </Flex>
+      </Box>
+      <Box w="100%" bg="blue.50" py={16} px={{ base: 4, md: 8 }}>
+        <VStack spacing={8} maxW="1400px" mx="auto" textAlign="center">
+          <Image src={BOOK} width={"140px"} height={"80px"} />
           <Heading
             fontFamily={"'Poppins', sans-serif"}
             fontSize={{ base: "3xl", md: "4xl", lg: "5xl" }}
@@ -262,18 +273,23 @@ const About = () => {
             Our recent creative activities
           </Heading>
 
-          <Text fontSize="lg" color="green.500" maxW="3xl" fontWeight={"bold"}>
+          <Text
+            fontSize={{ base: "md", md: "lg" }}
+            color="green.500"
+            maxW="3xl"
+            fontWeight={"bold"}
+          >
             Let's check some of our YouTube.
           </Text>
+
           <Box
             as="iframe"
             src="https://www.youtube.com/embed/1sJvoB3AsMU"
-            width="950px"
-            height="400px"
+            width="100%"
+            maxW="950px"
+            height={videoHeight}
             borderRadius="xl"
             border="none"
-            marginTop={8}
-            mb={40}
             boxShadow="xl"
             transition="all 0.3s ease"
             _hover={{
@@ -282,20 +298,42 @@ const About = () => {
             }}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
-            sx={{
-              aspectRatio: "16/9",
-              minHeight: "250px",
-              display: "block",
-              mx: "auto",
-            }}
           />
-          <HStack
-            marginBottom={20}
-            marginTop={-20}
-            gap={8}
-            alignItems="flex-start"
-          >
-            <Flex gap={4} alignItems="flex-start">
+        </VStack>
+      </Box>
+      <Box w="100%" py={16} px={{ base: 4, md: 8 }} bg="blue.50">
+        <HStack
+          gap={8}
+          alignItems="flex-start"
+          justifyContent="center"
+          flexDirection={{ base: "column", md: "row" }}
+          maxW="1400px"
+          mx="auto"
+        >
+          {[
+            {
+              icon: USER,
+              title: "Creative Ideas",
+              text: "Creative ideas spark innovation and inspire new possibilities, turning imagination into impactful solutions.",
+            },
+            {
+              icon: PHONE,
+              title: "Conversations",
+              text: "Conversation is a powerful tool for connection, learning, and sharing ideas, fostering understanding through meaningful dialogue.",
+            },
+            {
+              icon: LIKE,
+              title: "Make it Possible!",
+              text: "Make it possible through creative tutoring, turning challenges into opportunities for learning and growth.",
+            },
+          ].map((item, index) => (
+            <Flex
+              key={index}
+              gap={4}
+              alignItems="flex-start"
+              flexDirection={{ base: "row", sm: "row" }}
+              width={{ base: "100%", md: "30%" }}
+            >
               <Box
                 position="relative"
                 width={20}
@@ -306,7 +344,7 @@ const About = () => {
                 }}
               >
                 <Image
-                  src={USER}
+                  src={item.icon}
                   width={20}
                   height={20}
                   mt={1}
@@ -315,187 +353,98 @@ const About = () => {
               </Box>
               <VStack align="flex-start" spacing={2}>
                 <Text fontWeight="bold" fontSize="2xl">
-                  Creative Ideas
+                  {item.title}
                 </Text>
-                <Box textAlign="left" whiteSpace="pre-line">
-                  <Text display="inline-block" textAlign="left">
-                    Lorem ipsum dolor sit amet, conse ctetur adipi
-                    {"\n"}
-                    scing elit. duis odio nisl, tinci dunt eturn
-                    {"\n"}
-                    sed molis velit.
-                  </Text>
-                </Box>
+                <Text textAlign="left">{item.text}</Text>
               </VStack>
             </Flex>
-            <Flex gap={4} alignItems="flex-start">
-              <Box
-                position="relative"
-                width={20}
-                height={20}
-                transition="transform 0.3s ease"
-                _hover={{
-                  transform: "rotateY(180deg)",
-                }}
-              >
-                <Image
-                  src={PHONE}
-                  width={20}
-                  height={20}
-                  mt={1}
-                  transition="transform 0.2s ease"
-                />
-              </Box>
-              <VStack align="flex-start" spacing={2}>
-                <Text fontWeight="bold" fontSize="2xl" lineHeight="short">
-                  Creative Ideas
-                </Text>
-                <Box textAlign="left" whiteSpace="pre-line">
-                  <Text display="inline-block" textAlign="left">
-                    Lorem ipsum dolor sit amet, conse ctetur adipi
-                    {"\n"}
-                    scing elit. duis odio nisl, tinci dunt eturn
-                    {"\n"}
-                    sed molis velit.
-                  </Text>
-                </Box>
-              </VStack>
-            </Flex>
-            <Flex gap={4} alignItems="flex-start">
-              <Box
-                position="relative"
-                width={20}
-                height={20}
-                transition="transform 0.3s ease"
-                _hover={{
-                  transform: "rotateY(180deg)",
-                }}
-              >
-                <Image
-                  src={LIKE}
-                  width={20}
-                  height={20}
-                  mt={1}
-                  transition="transform 0.2s ease"
-                />
-              </Box>
-              <VStack align="flex-start" spacing={2}>
-                <Text fontWeight="bold" fontSize="2xl" lineHeight="short">
-                  Creative Ideas
-                </Text>
-                <Box textAlign="left" whiteSpace="pre-line">
-                  <Text display="inline-block" textAlign="left">
-                    Lorem ipsum dolor sit amet, conse ctetur adipi
-                    {"\n"}
-                    scing elit. duis odio nisl, tinci dunt eturn
-                    {"\n"}
-                    sed molis velit.
-                  </Text>
-                </Box>
-              </VStack>
-            </Flex>
-          </HStack>
-        </VStack>
-        <Box
-          position="relative"
-          w="100vw"
-          h="35vh"
-          bg="brand.300"
-          overflow="hidden"
-          _before={{
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            background:
-              "linear-gradient(to bottom, transparent 70%, brand.200 100%)",
-            zIndex: 1,
-          }}
-        >
-          {droplets.map((_, index) => {
-            const left = Math.random() * 100;
-            const duration = Math.random() * 5 + 5;
-            const delay = Math.random() * 2;
-            const xOffset = Math.random() * 20 - 10;
-            const size = Math.random() * 10 + 8;
-            const opacity = Math.random() * 0.5 + 0.5;
+          ))}
+        </HStack>
+      </Box>
+      <Box
+        position="relative"
+        w="100vw"
+        h={bottomSectionHeight}
+        bg="brand.300"
+        overflow="hidden"
+      >
+        {droplets.map((_, index) => {
+          const left = Math.random() * 100;
+          const duration = Math.random() * 5 + 5;
+          const delay = Math.random() * 2;
+          const xOffset = Math.random() * 20 - 10;
+          const size = Math.random() * 10 + 8;
+          const opacity = Math.random() * 0.5 + 0.5;
 
-            return (
-              <MotionBox
-                key={index}
-                position="absolute"
-                top="-20px"
-                left={`${left}vw`}
-                width={`${size}px`}
-                height={`${size}px`}
-                bg="blue.100"
-                borderRadius="50%"
-                initial={{ opacity: 0 }}
-                animate={{
-                  x: [`${xOffset}vw`, `${xOffset + 17}vw`],
-                  y: ["0vh", "100vh"],
-                  opacity: [opacity, opacity * 0.8, 0],
-                  scale: [1, 1.1, 0.9],
-                }}
-                transition={{
-                  duration,
-                  repeat: Infinity,
-                  ease: "linear",
-                  delay,
-                  repeatDelay: 0,
-                }}
-                _hover={{
-                  bg: "blue.100",
-                  transform: "scale(1.5)",
-                }}
-              />
-            );
-          })}
-          <Flex
-            dir="row"
-            position="absolute"
-            top="0"
-            left="0"
-            w="100%"
-            h="100%"
-            alignItems="center"
-            justifyContent="center"
-            zIndex="2"
-            textAlign="center"
+          return (
+            <MotionBox
+              key={index}
+              position="absolute"
+              top="-20px"
+              left={`${left}vw`}
+              width={`${size}px`}
+              height={`${size}px`}
+              bg="blue.100"
+              borderRadius="50%"
+              initial={{ opacity: 0 }}
+              animate={{
+                x: [`${xOffset}vw`, `${xOffset + 17}vw`],
+                y: ["0vh", "100vh"],
+                opacity: [opacity, opacity * 0.8, 0],
+                scale: [1, 1.1, 0.9],
+              }}
+              transition={{
+                duration,
+                repeat: Infinity,
+                ease: "linear",
+                delay,
+                repeatDelay: 0,
+              }}
+              _hover={{
+                bg: "blue.100",
+                transform: "scale(1.5)",
+              }}
+            />
+          );
+        })}
+
+        <Flex
+          direction={{ base: "column", md: "row" }}
+          position="absolute"
+          top="0"
+          left="0"
+          w="100%"
+          h="100%"
+          alignItems="center"
+          justifyContent="center"
+          zIndex="2"
+          textAlign="center"
+          px={4}
+        >
+          <Box
+            bg={"white"}
+            w={"120px"}
+            h={"125px"}
+            borderRadius={"10%"}
+            marginRight={{ base: 0, md: "25px" }}
+            mb={"10px"}
+            display={{ base: "100px", md: "flex" }}
           >
-            <Box
-              bg={"white"}
-              w={"120px"}
-              h={"125px"}
-              borderRadius={"10%"}
-              marginRight={"25px"}
-              mb={"10px"}
-            >
-              <GoBook
-                size={60}
-                color="#16C47F"
-                style={{ marginTop: "30px", marginLeft: "30px" }}
-              />
-            </Box>
-            <Heading
-              fontSize={{ base: "2xl", md: "4xl" }}
-              color="white"
-              fontWeight="bold"
-            >
-              Expert Tutors Come to You – Safe, Convenient,
-              <br />
-              and Effective!
-            </Heading>
-          </Flex>
-          <MotionBox
-            position="absolute"
-            bottom="0"
-            left="0"
-            w="100%"
-            h="20px"
-            bg="linear-gradient(to top, brand.200, transparent)"
-            zIndex="2"
-          />
-        </Box>
+            <GoBook
+              size={60}
+              color="#16C47F"
+              style={{ marginTop: "30px", marginLeft: "30px" }}
+            />
+          </Box>
+          <Heading
+            fontSize={{ base: "2xl", md: "4xl" }}
+            color="white"
+            fontWeight="bold"
+            maxW="1000px"
+          >
+            Expert Tutors Come to You – Safe, Convenient, and Effective!
+          </Heading>
+        </Flex>
       </Box>
     </VStack>
   );

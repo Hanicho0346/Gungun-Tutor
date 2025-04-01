@@ -11,16 +11,16 @@ import About from "./components/About";
 import { useLocation } from "react-router-dom";
 import TutorDashboard from "./components/TutorDashboard";
 import StudentDashboard from "./components/StudentDashboard";
+import FindTutor from "./components/FindTutor";
 
 function Layout() {
   const location = useLocation();
   const isNotFoundPage = location.pathname === "/not-found";
   const issignUp=location.pathname==="/signup"
-  const isDashboard=location.pathname==="/tutor-dashboard"||"/student-dashboard";
 
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
-      {!isNotFoundPage &&!issignUp&&!isDashboard && <NavBar />}
+      {!isNotFoundPage &&!issignUp&& <NavBar />}
       <Box flex="1" w="100%">
         <Outlet />
       </Box>
@@ -72,6 +72,10 @@ const router = createBrowserRouter([
       {
         path:"/student-dashboard",
         element:<StudentDashboard/>
+      },
+      {
+        path:"/findtutor",
+        element:<FindTutor/>
       }
     ],
   },
