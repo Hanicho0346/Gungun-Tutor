@@ -44,7 +44,7 @@ const NavBar = () => {
       { label: t("home"), path: "/" },
       { label: t("about"), path: "/about" },
       { label: t("tutors"), path: "/tutors", isPopover: true },
-      { label: t("contact"), path: "/contact" },
+      { label: t("contact"), path: "#contact" },
     ],
     [t]
   );
@@ -76,7 +76,6 @@ const NavBar = () => {
         height={{ base: "70px", md: "100px" }}
         m={2}
       >
-     
         {!isMobile && (
           <Box
             backgroundImage="url(/wave-lines.png)"
@@ -123,10 +122,9 @@ const NavBar = () => {
                   <Popover trigger="hover" placement="bottom">
                     <PopoverTrigger>
                       <Link
-                        as={Link}
-                        to="/signup" 
+                        href="/signup"
                         variant="link"
-                        position="relative"
+                        style={{ position: "relative" }}
                       >
                         {item.label}
                       </Link>
@@ -142,7 +140,7 @@ const NavBar = () => {
                         <VStack spacing={2} align="stretch">
                           <Button
                             as={NavLink}
-                             to="/signup?role=tutor"
+                            to="/become-tutor?role=tutor"
                             variant="ghost"
                             colorScheme="brand"
                             size="sm"
@@ -169,7 +167,6 @@ const NavBar = () => {
                     as={NavLink}
                     to={item.path}
                     position="relative"
-                    _hover={{ textDecoration: "none" }}
                     _after={{
                       content: '""',
                       position: "absolute",
@@ -181,6 +178,7 @@ const NavBar = () => {
                       transition: "width 0.3s ease",
                     }}
                     _hover={{
+                      textDecoration: "none",
                       _after: {
                         width: "100%",
                       },
@@ -208,7 +206,6 @@ const NavBar = () => {
             />
           )}
 
-
           <Button
             onClick={toggleLanguage}
             size={{ base: "sm", md: "md" }}
@@ -223,25 +220,6 @@ const NavBar = () => {
           >
             {i18n.language === "en" ? "Am" : "En"}
           </Button>
-          <NavLink to="/signup" aria-label="Find Your Tutor">
-            <Button
-              _hover={{
-                boxShadow: "lg",
-                bg: "#FFD59A",
-                color: "black",
-              }}
-              boxShadow="md"
-              color="brand.400"
-              p={{ base: 3, md: 6 }}
-              bgGradient="linear(to-r, white, #FFD59A, white)"
-              mr={{ base: 1, md: 3 }}
-              borderRadius="full"
-              size={{ base: "sm", md: "md" }}
-              fontSize={{ base: "xs", md: "md" }}
-            >
-              {t("SignUp")}
-            </Button>
-          </NavLink>
         </Flex>
       </Flex>
 

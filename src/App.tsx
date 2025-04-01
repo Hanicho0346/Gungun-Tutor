@@ -1,16 +1,14 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
-import Blog from "./components/Blog";
-import ContactUs from "./components/ContactUs";
-import SignUp from "./components/SignUp";
 import Main from "./components/Main";
 import NotFound from "./components/NotFound";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import About from "./components/About";
 import { useLocation } from "react-router-dom";
-import TutorDashboard from "./components/TutorDashboard";
-import StudentDashboard from "./components/StudentDashboard";
+
+
+import BecomeTutor from "./components/BecomeTutor";
 import FindTutor from "./components/FindTutor";
 
 function Layout() {
@@ -20,7 +18,9 @@ function Layout() {
 
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
+
       {!isNotFoundPage &&!issignUp&& <NavBar />}
+
       <Box flex="1" w="100%">
         <Outlet />
       </Box>
@@ -38,20 +38,8 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: "/blog",
-        element: <Blog />,
-      },
-      {
-        path: "/contact",
-        element: <ContactUs />,
-      },
-      {
         path: "/about",
         element: <About />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
       },
       {
         path: "/not-found",
@@ -66,13 +54,10 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
       {
-        path:"/tutor-dashboard", 
-       element:<TutorDashboard/>
+        path:"/become-tutor", 
+       element:<BecomeTutor/>
       },
-      {
-        path:"/student-dashboard",
-        element:<StudentDashboard/>
-      },
+    
       {
         path:"/findtutor",
         element:<FindTutor/>

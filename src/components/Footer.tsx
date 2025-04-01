@@ -33,6 +33,7 @@ const links = [
   },
 ];
 const Footer = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (

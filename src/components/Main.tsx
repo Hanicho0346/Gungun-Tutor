@@ -11,12 +11,13 @@ import {
   useMediaQuery,
   chakra,
   shouldForwardProp,
+  SimpleGrid,
+  Center,
 } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaLightbulb, FaCode, FaQuoteRight, FaCheck } from "react-icons/fa";
-
 import picture from "../assets/Images/Ethiopian Kids Children.png";
 import picture2 from "../assets/Images/One-on-One-Tutoring.jpg";
 import chat from "../assets/Images/chat.png";
@@ -24,7 +25,8 @@ import { Link } from "react-router-dom";
 import { isValidMotionProp, motion } from "framer-motion";
 import AddisAbabaMap from "./AddisAbabaMap";
 import pcscreen from "../assets/Images/pcscreen.png";
-
+import { IconType } from "react-icons";
+import { locations } from "./Locations";
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
@@ -49,7 +51,28 @@ const rotate = keyframes`
 const HOVER_BOX_WIDTH = { base: "100%", md: "23%" };
 const IMAGE_SIZES = { base: "250px", md: "400px", lg: "500px" };
 
-const HoverBox = ({ icon, title, description, color }) => {
+interface HoverBoxProps {
+  icon: IconType;
+  title: string;
+  description: string;
+  color: string;
+}
+
+interface ClientCardProps {
+  name: string;
+  relation: string;
+  review: string;
+}
+
+interface FeatureItemProps {
+  text: string;
+}
+const HoverBox: React.FC<HoverBoxProps> = ({
+  icon,
+  title,
+  description,
+  color,
+}) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -112,7 +135,7 @@ const HoverBox = ({ icon, title, description, color }) => {
   );
 };
 
-const ClientCard = ({ name, relation, review }) => {
+const ClientCard: React.FC<ClientCardProps> = ({ name, relation, review }) => {
   const { t } = useTranslation();
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
@@ -185,7 +208,7 @@ const ClientCard = ({ name, relation, review }) => {
   );
 };
 
-const FeatureItem = ({ text }) => {
+const FeatureItem: React.FC<FeatureItemProps> = ({ text }) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -224,7 +247,6 @@ const Main = () => {
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile] = useMediaQuery("(max-width: 768px)");
-
   const clients = [
     {
       name: t("client1.name"),
@@ -259,7 +281,7 @@ const Main = () => {
       },
     },
   };
-  
+
   const itemVariants = {
     hidden: { y: 20, opacity: 0 },
     visible: {
@@ -270,7 +292,7 @@ const Main = () => {
       },
     },
   };
-  
+
   const featureCardVariants = {
     hover: {
       y: -5,
@@ -280,27 +302,27 @@ const Main = () => {
       },
     },
   };
-  
-    const featuresforScreen = [
-      {
-        number: "1",
-        title: "Talk face-to-face",
-        description:
-          "Students and tutors see each other via live video – great for building rapport",
-      },
-      {
-        number: "2",
-        title: "Share and collaborate",
-        description:
-          "Upload essays or past papers, and work through examples together on the whiteboard",
-      },
-      {
-        number: "3",
-        title: "Rewatch lessons",
-        description:
-          "Lessons are recorded, so students can watch them later for revision",
-      },
-    ];
+
+  const featuresforScreen = [
+    {
+      number: "1",
+      title: "Talk face-to-face",
+      description:
+        "Students and tutors see each other via live video – great for building rapport",
+    },
+    {
+      number: "2",
+      title: "Share and collaborate",
+      description:
+        "Upload essays or past papers, and work through examples together on the whiteboard",
+    },
+    {
+      number: "3",
+      title: "Rewatch lessons",
+      description:
+        "Lessons are recorded, so students can watch them later for revision",
+    },
+  ];
 
   return (
     <Box width="100%" overflow="hidden" px={isMobile ? 4 : 8}>
@@ -466,6 +488,7 @@ const Main = () => {
             alignItems="center"
             textAlign="center"
             mt={isMobile ? 6 : 12}
+           
           >
             <Text
               p={2}
@@ -506,7 +529,7 @@ const Main = () => {
       <Flex
         flexDir={{ base: "column", md: "row" }}
         align="center"
-        mt={{ base: 16, md: 24 }}
+        mt={{ base: 16, md: 32 }}
         gap={10}
         justifyContent="space-around"
         px={isMobile ? 0 : 4}
@@ -535,8 +558,9 @@ const Main = () => {
           </Text>
           <Divider orientation="horizontal" />
 
-          <Flex
-            flexWrap="wrap"
+          <SimpleGrid
+            columns={{ base: 1, md: 2 }}
+            spacing={3}
             justifyContent={{ base: "center", md: "space-between" }}
             gap={1}
             maxW={isMobile ? "100%" : "500px"}
@@ -545,23 +569,23 @@ const Main = () => {
               <FeatureItem key={index} text={feature} />
             ))}
             <Divider my={7} orientation="horizontal" />
-            <Button
-              background="brand.400"
-              borderRadius={"50px"}
-              p={7}
-              transition="0.3s ease"
-              boxShadow={"xl"}
-              _hover={{
-                bg: "brand.300",
-                textColor: "white",
-              }}
-              as={Link}
-              to={"/about"}
-              width={isMobile ? "100%" : "auto"}
-            >
-              More About Us
-            </Button>
-          </Flex>
+          </SimpleGrid>
+          <Button
+            background="brand.400"
+            borderRadius={"50px"}
+            p={7}
+            transition="0.3s ease"
+            boxShadow={"xl"}
+            _hover={{
+              bg: "brand.300",
+              textColor: "white",
+            }}
+            as={Link}
+            to={"/about"}
+            width={isMobile ? "100%" : "auto"}
+          >
+            More About Us
+          </Button>
         </Box>
 
         {isMobile ? (
@@ -582,7 +606,7 @@ const Main = () => {
       <Divider mt={{ base: 10, md: 20 }} />
 
       <Flex
-        mt={{ base: 10, md: 20 }}
+        mt={{ base: 10, md: 2 }}
         flexDir={{ base: "column", md: "row" }}
         align="center"
         m={2}
@@ -656,107 +680,108 @@ const Main = () => {
         </Flex>
       </Flex>
       <Flex
-      as={motion.div}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-100px" }}
-      variants={containerVariants}
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      gap={4} 
-      py={6} 
-      px={4}
-    >
-      <Box 
         as={motion.div}
-        variants={itemVariants}
-        textAlign="center" 
-        maxWidth="2xl"
-        mb={2} 
-      >
-        <Text
-          fontSize={{ base: "2xl", md: "4xl" }}
-          color="brand.400"
-          fontWeight="bold"
-          mb={2} 
-        >
-          How We Work
-        </Text>
-        <Text fontSize={{ base: "sm", md: "lg" }} color="gray.500">
-          Lessons to fit your schedule, from the comfort of home
-        </Text>
-      </Box>
-
-      <Image
-        as={motion.img}
-        variants={itemVariants}
-        src={pcscreen}
-        width={{ base: "90%", md: "80%", lg: "3xl" }}
-        maxWidth="800px"
-        objectFit="contain"
-        alt="PC Screen"
-      />
-
-      <Flex
-        as={motion.div}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
-        flexDirection={{ base: "column", md: "row" }}
+        flexDirection="column"
         justifyContent="center"
-        alignItems={{ base: "center", md: "flex-start" }}
-        gap={{ base: 4, md: 28 }}
-        maxWidth="6xl"
-        px={2} 
-        flexWrap="wrap"
-        mt={2} 
+        alignItems="center"
+        gap={4}
+        py={6}
+        px={4}
+        mt={20}
       >
-        {featuresforScreen.map((feature, index) => (
-          <Flex
-            as={motion.div}
-            key={index}
-            variants={itemVariants}
-            whileHover="hover"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            flexDirection="column"
-            alignItems="center"
-            textAlign="center"
-            width={{ base: "100%", md: "300px" }}
-            gap={2} 
-            p={6} 
-            bg="white"
-            variants={featureCardVariants}
+        <Box
+          as={motion.div}
+          variants={itemVariants}
+          textAlign="center"
+          maxWidth="2xl"
+          mb={2}
+        >
+          <Text
+            fontSize={{ base: "2xl", md: "4xl" }}
+            color="brand.400"
+            fontWeight="bold"
+            mb={2}
           >
+            How We Work
+          </Text>
+          <Text fontSize={{ base: "sm", md: "lg" }} m={3} color="gray.500">
+            Lessons to fit your schedule, from the comfort of home
+          </Text>
+        </Box>
+
+        <Image
+          as={motion.img}
+          variants={itemVariants}
+          src={pcscreen}
+          width={{ base: "90%", md: "90%", lg: "3xl" }}
+          maxWidth="800px"
+          objectFit="contain"
+          alt="PC Screen"
+        />
+
+        <Flex
+          as={motion.div}
+          variants={containerVariants}
+          flexDirection={{ base: "column", md: "row" }}
+          justifyContent="space-between"
+          alignItems={{ base: "center", md: "flex-start" }}
+          gap={{ base: 4, md: "28" }}
+          maxWidth="6xl"
+          px={2}
+          flexWrap="wrap"
+          mt={10}
+        >
+          {featuresforScreen.map((feature, index) => (
             <Flex
-              justifyContent="center"
+              as={motion.div}
+              key={index}
+              variants={itemVariants}
+              whileHover="hover"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              flexDirection="column"
               alignItems="center"
-              width="50px"
-              height="50px"
-              borderRadius="full"
-              bg="green.500"
-              color="white"
-              fontSize="xl"
-              fontWeight="bold"
-              mb={2}
+              textAlign="center"
+              width={{ base: "100%", md: "300px" }}
+              gap={2}
+              p={6}
+              bg="white"
+              variants={featureCardVariants}
             >
-              {feature.number}
+              <Flex
+                justifyContent="center"
+                alignItems="center"
+                width="50px"
+                height="50px"
+                borderRadius="full"
+                bg="green.500"
+                color="white"
+                fontSize="xl"
+                fontWeight="bold"
+                mb={2}
+              >
+                {feature.number}
+              </Flex>
+              <Text fontSize="lg" fontWeight="semibold" color="gray.700">
+                {feature.title}
+              </Text>
+              <Text fontSize="md" color="gray.500">
+                {feature.description}
+              </Text>
             </Flex>
-            <Text fontSize="lg" fontWeight="semibold" color="gray.700">
-              {feature.title}
-            </Text>
-            <Text fontSize="md" color="gray.500">
-              {feature.description}
-            </Text>
-          </Flex>
-        ))}
+          ))}
+        </Flex>
       </Flex>
-    </Flex>
       <Box as="section" mt={{ base: 16, md: 24 }} textAlign="center">
         <MotionBox
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition="0.3s ease"
         >
           <Text fontSize="3xl" fontWeight="bold" color="brand.400" mb={4}>
             Where We've Tutored
@@ -791,7 +816,7 @@ const Main = () => {
             maxWidth={{ base: "100%", md: "100%" }}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
+            transition="0.6s ease"
           >
             <AddisAbabaMap />
           </MotionBox>
