@@ -17,7 +17,7 @@ import { FaChartLine, FaRegSmile, FaStar } from "react-icons/fa";
 import { FiBookOpen, FiAward } from "react-icons/fi";
 import pcscreen from "../assets/Images/pcscreen.png";
 
-const TutorDashboard = () => {
+const BecomeTutor = () => {
   const benefits = [
     {
       title: "Share Your Knowledge",
@@ -239,4 +239,4 @@ const TutorDashboard = () => {
   );
 };
 
-export default TutorDashboard;
+export default BecomeTutor;
