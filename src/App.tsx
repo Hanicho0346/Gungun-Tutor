@@ -36,16 +36,8 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: "/contact",
-        element: <ContactUs />,
-      },
-      {
         path: "/about",
         element: <About />,
-      },
-      {
-        path: "/signup",
-        element: <SignUp />,
       },
       {
         path: "/not-found",
@@ -60,11 +52,11 @@ const router = createBrowserRouter([
         element: <NotFound />,
       },
       {
-        path:"/tutor-dashboard", 
+        path:"/become-tutor", 
        element:<TutorDashboard/>
       },
       {
-        path:"/student-dashboard",
+        path:"/find-tutor",
         element:<StudentDashboard/>
       }
     ],

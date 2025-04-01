@@ -44,7 +44,7 @@ const NavBar = () => {
       { label: t("home"), path: "/" },
       { label: t("about"), path: "/about" },
       { label: t("tutors"), path: "/tutors", isPopover: true },
-      { label: t("contact"), path: "/contact" },
+      { label: t("contact"), path: "#contact" },
     ],
     [t]
   );
@@ -140,7 +140,7 @@ const NavBar = () => {
                         <VStack spacing={2} align="stretch">
                           <Button
                             as={NavLink}
-                            to="/signup?role=tutor"
+                            to="/become-tutor?role=tutor"
                             variant="ghost"
                             colorScheme="brand"
                             size="sm"
@@ -150,7 +150,7 @@ const NavBar = () => {
                           </Button>
                           <Button
                             as={NavLink}
-                            to="/signup?role=student"
+                            to="/find-tutor?role=student"
                             variant="ghost"
                             colorScheme="brand"
                             size="sm"
@@ -220,25 +220,6 @@ const NavBar = () => {
           >
             {i18n.language === "en" ? "Am" : "En"}
           </Button>
-          <NavLink to="/signup" aria-label="Find Your Tutor">
-            <Button
-              _hover={{
-                boxShadow: "lg",
-                bg: "#FFD59A",
-                color: "black",
-              }}
-              boxShadow="md"
-              color="brand.400"
-              p={{ base: 3, md: 6 }}
-              bgGradient="linear(to-r, white, #FFD59A, white)"
-              mr={{ base: 1, md: 3 }}
-              borderRadius="full"
-              size={{ base: "sm", md: "md" }}
-              fontSize={{ base: "xs", md: "md" }}
-            >
-              {t("SignUp")}
-            </Button>
-          </NavLink>
         </Flex>
       </Flex>
 

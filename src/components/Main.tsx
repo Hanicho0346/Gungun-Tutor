@@ -11,12 +11,13 @@ import {
   useMediaQuery,
   chakra,
   shouldForwardProp,
+  SimpleGrid,
+  Center,
 } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaLightbulb, FaCode, FaQuoteRight, FaCheck } from "react-icons/fa";
-
 import picture from "../assets/Images/Ethiopian Kids Children.png";
 import picture2 from "../assets/Images/One-on-One-Tutoring.jpg";
 import chat from "../assets/Images/chat.png";
@@ -24,7 +25,8 @@ import { Link } from "react-router-dom";
 import { isValidMotionProp, motion } from "framer-motion";
 import AddisAbabaMap from "./AddisAbabaMap";
 import pcscreen from "../assets/Images/pcscreen.png";
-
+import { IconType } from "react-icons";
+import { locations } from "./Locations";
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
@@ -49,7 +51,28 @@ const rotate = keyframes`
 const HOVER_BOX_WIDTH = { base: "100%", md: "23%" };
 const IMAGE_SIZES = { base: "250px", md: "400px", lg: "500px" };
 
-const HoverBox = ({ icon, title, description, color }) => {
+interface HoverBoxProps {
+  icon: IconType;
+  title: string;
+  description: string;
+  color: string;
+}
+
+interface ClientCardProps {
+  name: string;
+  relation: string;
+  review: string;
+}
+
+interface FeatureItemProps {
+  text: string;
+}
+const HoverBox: React.FC<HoverBoxProps> = ({
+  icon,
+  title,
+  description,
+  color,
+}) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -112,7 +135,7 @@ const HoverBox = ({ icon, title, description, color }) => {
   );
 };
 
-const ClientCard = ({ name, relation, review }) => {
+const ClientCard: React.FC<ClientCardProps> = ({ name, relation, review }) => {
   const { t } = useTranslation();
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
@@ -185,7 +208,7 @@ const ClientCard = ({ name, relation, review }) => {
   );
 };
 
-const FeatureItem = ({ text }) => {
+const FeatureItem: React.FC<FeatureItemProps> = ({ text }) => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
 
   return (
@@ -224,7 +247,6 @@ const Main = () => {
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile] = useMediaQuery("(max-width: 768px)");
-
   const clients = [
     {
       name: t("client1.name"),
@@ -466,6 +488,7 @@ const Main = () => {
             alignItems="center"
             textAlign="center"
             mt={isMobile ? 6 : 12}
+           
           >
             <Text
               p={2}
@@ -506,7 +529,7 @@ const Main = () => {
       <Flex
         flexDir={{ base: "column", md: "row" }}
         align="center"
-        mt={{ base: 16, md: 24 }}
+        mt={{ base: 16, md: 32 }}
         gap={10}
         justifyContent="space-around"
         px={isMobile ? 0 : 4}
@@ -535,8 +558,9 @@ const Main = () => {
           </Text>
           <Divider orientation="horizontal" />
 
-          <Flex
-            flexWrap="wrap"
+          <SimpleGrid
+            columns={{ base: 1, md: 2 }}
+            spacing={3}
             justifyContent={{ base: "center", md: "space-between" }}
             gap={1}
             maxW={isMobile ? "100%" : "500px"}
@@ -545,23 +569,23 @@ const Main = () => {
               <FeatureItem key={index} text={feature} />
             ))}
             <Divider my={7} orientation="horizontal" />
-            <Button
-              background="brand.400"
-              borderRadius={"50px"}
-              p={7}
-              transition="0.3s ease"
-              boxShadow={"xl"}
-              _hover={{
-                bg: "brand.300",
-                textColor: "white",
-              }}
-              as={Link}
-              to={"/about"}
-              width={isMobile ? "100%" : "auto"}
-            >
-              More About Us
-            </Button>
-          </Flex>
+          </SimpleGrid>
+          <Button
+            background="brand.400"
+            borderRadius={"50px"}
+            p={7}
+            transition="0.3s ease"
+            boxShadow={"xl"}
+            _hover={{
+              bg: "brand.300",
+              textColor: "white",
+            }}
+            as={Link}
+            to={"/about"}
+            width={isMobile ? "100%" : "auto"}
+          >
+            More About Us
+          </Button>
         </Box>
 
         {isMobile ? (
@@ -582,7 +606,7 @@ const Main = () => {
       <Divider mt={{ base: 10, md: 20 }} />
 
       <Flex
-        mt={{ base: 10, md: 20 }}
+        mt={{ base: 10, md: 2 }}
         flexDir={{ base: "column", md: "row" }}
         align="center"
         m={2}
@@ -667,6 +691,7 @@ const Main = () => {
         gap={4}
         py={6}
         px={4}
+        mt={20}
       >
         <Box
           as={motion.div}
@@ -683,7 +708,7 @@ const Main = () => {
           >
             How We Work
           </Text>
-          <Text fontSize={{ base: "sm", md: "lg" }} color="gray.500">
+          <Text fontSize={{ base: "sm", md: "lg" }} m={3} color="gray.500">
             Lessons to fit your schedule, from the comfort of home
           </Text>
         </Box>
@@ -692,7 +717,7 @@ const Main = () => {
           as={motion.img}
           variants={itemVariants}
           src={pcscreen}
-          width={{ base: "90%", md: "80%", lg: "3xl" }}
+          width={{ base: "90%", md: "90%", lg: "3xl" }}
           maxWidth="800px"
           objectFit="contain"
           alt="PC Screen"
@@ -702,13 +727,13 @@ const Main = () => {
           as={motion.div}
           variants={containerVariants}
           flexDirection={{ base: "column", md: "row" }}
-          justifyContent="center"
+          justifyContent="space-between"
           alignItems={{ base: "center", md: "flex-start" }}
-          gap={{ base: 4, md: 28 }}
+          gap={{ base: 4, md: "28" }}
           maxWidth="6xl"
           px={2}
           flexWrap="wrap"
-          mt={2}
+          mt={10}
         >
           {featuresforScreen.map((feature, index) => (
             <Flex
