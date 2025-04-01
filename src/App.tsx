@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import { useLocation } from "react-router-dom";
 
-import StudentDashboard from "./components/FindTutor";
+import BecomeTutor from "./components/BecomeTutor";
 import FindTutor from "./components/FindTutor";
 
 function Layout() {
@@ -52,7 +52,7 @@ const router = createBrowserRouter([
       },
       {
         path:"/become-tutor", 
-       element:<StudentDashboard/>
+       element:<BecomeTutor/>
       },
       {
         path:"/findtutor",
