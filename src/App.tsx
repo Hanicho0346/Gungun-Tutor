@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import About from "./components/About";
 import { useLocation } from "react-router-dom";
 
+
 import BecomeTutor from "./components/BecomeTutor";
 import FindTutor from "./components/FindTutor";
 
@@ -17,7 +18,9 @@ function Layout() {
 
   return (
     <Box minH="100vh" display="flex" flexDirection="column">
-      {!isNotFoundPage &&!issignUp && <NavBar />}
+
+      {!isNotFoundPage &&!issignUp&& <NavBar />}
+
       <Box flex="1" w="100%">
         <Outlet />
       </Box>
@@ -54,6 +57,7 @@ const router = createBrowserRouter([
         path:"/become-tutor", 
        element:<BecomeTutor/>
       },
+    
       {
         path:"/findtutor",
         element:<FindTutor/>
