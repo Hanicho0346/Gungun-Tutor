@@ -1,15 +1,14 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
-import ContactUs from "./components/ContactUs";
-import SignUp from "./components/SignUp";
 import Main from "./components/Main";
 import NotFound from "./components/NotFound";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import About from "./components/About";
 import { useLocation } from "react-router-dom";
-import TutorDashboard from "./components/TutorDashboard";
-import StudentDashboard from "./components/StudentDashboard";
+
+import StudentDashboard from "./components/FindTutor";
+import FindTutor from "./components/FindTutor";
 
 function Layout() {
   const location = useLocation();
@@ -53,11 +52,11 @@ const router = createBrowserRouter([
       },
       {
         path:"/become-tutor", 
-       element:<TutorDashboard/>
+       element:<StudentDashboard/>
       },
       {
-        path:"/find-tutor",
-        element:<StudentDashboard/>
+        path:"/findtutor",
+        element:<FindTutor/>
       }
     ],
   },
