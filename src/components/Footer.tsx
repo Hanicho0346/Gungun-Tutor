@@ -8,7 +8,6 @@ import {
   Button,
   Divider,
   Stack,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import { FaFacebook, FaTiktok } from "react-icons/fa";
 import { RiSendPlaneFill } from "react-icons/ri";
@@ -33,8 +32,7 @@ const links = [
   },
 ];
 const Footer = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const isMobile = useBreakpointValue({ base: true, md: false });
+
 
   return (
     <Box>
