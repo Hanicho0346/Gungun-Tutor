@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { I18nextProvider } from "react-i18next";
-import i18n from "./i18n.js";
+import i18n from "./i18n.ts"; 
+
 export const theme = extendTheme({
   colors: {
     brand: {
@@ -28,7 +29,7 @@ export const theme = extendTheme({
     heading: "Georgia, serif",
     mono: "Menlo, monospace",
   },
-  fontSizes: {  // 1
+  fontSizes: {
     xs: "0.75rem",
     sm: "0.875rem",
     md: "1rem",
@@ -40,8 +41,7 @@ export const theme = extendTheme({
     "5xl": "3rem",
     "6xl": "3.75rem", 
   },
-  fontWeights: {    
-
+  fontWeights: {
     normal: 400,
     medium: 500,
     bold: 700,
@@ -52,8 +52,8 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ChakraProvider theme={theme}>
       <I18nextProvider i18n={i18n}>
-      <App />
-      </I18nextProvider>,
+        <App />
+      </I18nextProvider>
     </ChakraProvider>
   </StrictMode>
 );

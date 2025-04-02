@@ -1,4 +1,4 @@
-export const locations = [
+export const locations : { position: [number, number]; name: string; description: string; number: string }[] = [
     {
       name: "Winget",
       position: [9.0417, 38.7464],

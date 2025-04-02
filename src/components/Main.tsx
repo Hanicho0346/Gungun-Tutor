@@ -12,7 +12,6 @@ import {
   chakra,
   shouldForwardProp,
   SimpleGrid,
-  Center,
 } from "@chakra-ui/react";
 import { keyframes } from "@emotion/react";
 import { useState } from "react";
@@ -26,7 +25,6 @@ import { isValidMotionProp, motion } from "framer-motion";
 import AddisAbabaMap from "./AddisAbabaMap";
 import pcscreen from "../assets/Images/pcscreen.png";
 import { IconType } from "react-icons";
-import { locations } from "./Locations";
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
@@ -739,7 +737,7 @@ const Main = () => {
             <Flex
               as={motion.div}
               key={index}
-              variants={itemVariants}
+              variants={featureCardVariants}
               whileHover="hover"
               initial="hidden"
               whileInView="visible"
@@ -751,7 +749,6 @@ const Main = () => {
               gap={2}
               p={6}
               bg="white"
-              variants={featureCardVariants}
             >
               <Flex
                 justifyContent="center"

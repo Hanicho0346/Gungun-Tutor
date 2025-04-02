@@ -20,7 +20,7 @@ const createCustomIcon = () =>
 
 const AddisAbabaMap: React.FC = () => {
   const [isMobile] = useMediaQuery("(max-width: 768px)");
-  const centerPosition = [9.005401, 38.763611];
+  const centerPosition: [number, number] = [9.005401, 38.763611];
 
   return (
     <Box width="100%" mt={10} px={isMobile ? 0 : 4}>
