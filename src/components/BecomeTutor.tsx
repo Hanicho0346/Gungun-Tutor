@@ -11,7 +11,6 @@ import {
   Icon,
   Avatar,
   Badge,
-  useBreakpointValue
 } from "@chakra-ui/react";
 import { FaChartLine, FaRegSmile, FaStar } from "react-icons/fa";
 import { FiBookOpen, FiAward } from "react-icons/fi";
@@ -75,8 +74,7 @@ const BecomeTutor = () => {
     },
   ];
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const isMobile = useBreakpointValue({ base: true, md: false });
+
 
   return (
     <Box p={{ base: 4, md: 8 }} maxW="1200px" mx="auto">
