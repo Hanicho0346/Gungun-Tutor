@@ -122,7 +122,7 @@ const NavBar = () => {
                   <Popover trigger="hover" placement="bottom">
                     <PopoverTrigger>
                       <Link
-                        href="/signup"
+                        href="/"
                         variant="link"
                         style={{ position: "relative" }}
                       >

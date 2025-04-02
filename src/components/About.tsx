@@ -23,7 +23,7 @@ import USER from "../assets/Images/user.png";
 import PHONE from "../assets/Images/smartphone.png";
 import LIKE from "../assets/Images/like.png";
 
-const MotionBox = motion(Box);
+const MotionBox = motion.create(Box);
 const float = keyframes`
   0% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(0deg); }
