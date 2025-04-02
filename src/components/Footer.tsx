@@ -83,9 +83,8 @@ const Footer = () => {
               </Text>
               <Flex gap={4} justify={{ base: "center", md: "flex-start" }}>
                 {links.map((IconComponent, index) => (
-                  <Link to={IconComponent.to}>
+                  <Link to={IconComponent.to} key={index}>
                     <Icon
-                      key={index}
                       as={IconComponent.Icon}
                       boxSize={6}
                       cursor="pointer"
@@ -110,9 +109,9 @@ const Footer = () => {
                 Quick Links
               </Text>
               <VStack align={{ base: "center", md: "start" }} spacing={3}>
-                {["Home", "About Us", "Services", "Contact Us"].map((link) => (
+                {["Home", "About Us", "Services", "Contact Us"].map((link,index) => (
                   <Text
-                    key={link}
+                    key={index}
                     fontSize="md"
                     _hover={{ color: "brand.200", cursor: "pointer" }}
                   >

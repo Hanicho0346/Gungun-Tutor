@@ -3,7 +3,8 @@ import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { I18nextProvider } from "react-i18next";
-import i18n from "./i18n.ts"; 
+import i18n from "./i18n.ts";
+import ErrorBoundary from "./ErrorBoundary.tsx";
 
 export const theme = extendTheme({
   colors: {
@@ -39,21 +40,23 @@ export const theme = extendTheme({
     "3xl": "1.875rem",
     "4xl": "2.25rem",
     "5xl": "3rem",
-    "6xl": "3.75rem", 
+    "6xl": "3.75rem",
   },
   fontWeights: {
     normal: 400,
     medium: 500,
     bold: 700,
-  },  
+  },
 });
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ChakraProvider theme={theme}>
-      <I18nextProvider i18n={i18n}>
-        <App />
-      </I18nextProvider>
-    </ChakraProvider>
+    <ErrorBoundary>
+      <ChakraProvider theme={theme}>
+        <I18nextProvider i18n={i18n}>
+          <App />
+        </I18nextProvider>
+      </ChakraProvider>
+    </ErrorBoundary>
   </StrictMode>
 );
