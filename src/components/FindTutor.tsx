@@ -1,7 +1,29 @@
 import { Box, Flex, FormControl, FormLabel, Heading, HStack, Image, Input, Select, Textarea, VStack } from "@chakra-ui/react";
 import Tutor from "../assets/Images/tutor.png";
+import * as Yup from "yup";
+import {Formik} from "formik";
+import {Tutore} from "./types"
+interface FindTutorProps{
+  tutours:Tutore;
+}
+export default function FindTutor (props:FindTutorProps) {
+  const {tutours}=props;
+   const validationSchema =() =>
+    Yup.object().shape({
+      fname:Yup.string().required("First nameis required"),
+      lname:Yup.string().required("Last name is required"),
+      phone:Yup.string().required("Parent Phone number is required"),
+      email:Yup.string().email().required("Email is required"),
+      hadress:Yup.string().required("home adress is required"),
+      gofstudent:Yup.string().required("Grade of student is required"),
+      hperday:Yup.string().required("Hours per day is required"),
+      dperweek:Yup.string().required("Day per week is required"),
+      subject:Yup.string().required("subject is required")
+    })
 
-const FindTutor: React.FC = () => {
+    const onSubmit =()=>{
+      console.log("hh");
+    }
   return (
     <Box w="100vw" minH="100vh" py="20" display="flex" justifyContent="center">
          <Flex bgColor="brand.500" width="70%"  p={10} justify={"center"} borderRadius={"10px"}>
@@ -12,6 +34,13 @@ const FindTutor: React.FC = () => {
             <Image src={Tutor} objectFit="contain" width="100%" height="auto" mt={"-20"}/>
           </Box>
           </Flex>
+          <Formik<Tutore>
+            initialValues={{
+              ...tutours
+            }}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+          >
         <VStack spacing={5} p={10} width="100%" bgSize={"lg"}>
           <HStack width="70%">
             <FormControl isRequired size={"lg"}>
@@ -98,10 +127,10 @@ const FindTutor: React.FC = () => {
             <Textarea size="lg" h={44} bg={"white"}/>
           </FormControl>
         </VStack>
+        </Formik>
       </VStack>
       </Flex>
     </Box>
   );
 };
 
-export default FindTutor;
