@@ -12,6 +12,7 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
     "@chakra-ui/react": "^2.10.3",
+    "@emailjs/browser": "^4.4.1",
     "@emotion/react": "^11.14.0",
     "@hookform/resolvers": "^4.1.3",
     "@react-google-maps/api": "^2.20.6",
@@ -28,6 +29,7 @@
     "react-router-dom": "^7.4.0",
     "react-swiper": "^0.1.5",
     "swiper": "^11.2.6",
+    "yup": "^1.6.1",
     "zod": "^3.24.2",
     "zod-formik-adapter": "^1.3.0"
   },

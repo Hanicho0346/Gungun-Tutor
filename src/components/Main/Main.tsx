@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import picture from "../../assets/Images/photo_2025-03-19_09-24-01.jpg";

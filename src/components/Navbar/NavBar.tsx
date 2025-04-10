@@ -56,7 +56,7 @@ const NavBar = () => {
     () => [
       { label: t("home"), path: "/", icon: FiHome },
       { label: t("about"), path: "/about", icon: FiInfo },
-      { label: t("tutors"), path: "/tutors", isPopover: true, icon: FiUsers },
+      { label: t("tutors"), path: "", isPopover: true, icon: FiUsers },
       { label: t("contact"), path: "/contact-us", icon: FiMail },
       
     ],

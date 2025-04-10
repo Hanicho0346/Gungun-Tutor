@@ -5,6 +5,6 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
-    include: ['leaflet', 'react-leaflet'],
+    include: ['leaflet', 'react-leaflet',"swiper"],
   }
 })
