@@ -18,17 +18,30 @@ import {
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
+  Icon,
+  PopoverArrow,
 } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCallback, useMemo } from "react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logo from "../assets/Images/Logo Image.png";
+import { CiGlobe } from "react-icons/ci";
+import {
+  FiHome,
+  FiInfo,
+  FiUsers,
+  FiMail,
+  FiUserPlus,
+  FiSearch,
+} from "react-icons/fi";
+import { changeLanguage } from "i18next";
 
 interface NavItem {
   label: string;
   path: string;
   isPopover?: boolean;
+  icon?: React.ElementType;
 }
 
 const NavBar = () => {
@@ -41,10 +54,10 @@ const NavBar = () => {
 
   const navItems: NavItem[] = useMemo(
     () => [
-      { label: t("home"), path: "/" },
-      { label: t("about"), path: "/about" },
-      { label: t("tutors"), path: "/tutors", isPopover: true },
-      { label: t("contact"), path: "#contact" },
+      { label: t("home"), path: "/", icon: FiHome },
+      { label: t("about"), path: "/about", icon: FiInfo },
+      { label: t("tutors"), path: "/tutors", isPopover: true, icon: FiUsers },
+      { label: t("contact"), path: "#contact", icon: FiMail },
     ],
     [t]
   );
@@ -73,7 +86,7 @@ const NavBar = () => {
         boxShadow="md"
         borderRadius={{ base: "none", md: "full" }}
         zIndex="sticky"
-        height={{ base: "70px", md: "100px" }}
+        height={{ base: "90px", md: "100px" }}
         m={2}
       >
         {!isMobile && (
@@ -85,6 +98,7 @@ const NavBar = () => {
             position="absolute"
             inset={0}
             opacity={1}
+            p={10}
             borderRadius={{ base: "none", md: "full" }}
             zIndex={-1}
           />
@@ -94,7 +108,7 @@ const NavBar = () => {
           <Image
             ml={{ base: 2, md: 4 }}
             src={logo}
-            boxSize={{ base: "40px", md: "90px" }}
+            boxSize={{ base: "80px", md: "90px" }}
             objectFit="contain"
             alt="Company Logo"
             transition="all 0.2s ease"
@@ -110,7 +124,7 @@ const NavBar = () => {
             as="ul"
             display="flex"
             gap={{ base: 3, sm: 4, md: 8 }}
-            fontSize={{ base: "xs", sm: "sm", md: "md", lg: "lg", xl: "lg" }}
+            fontSize={{ base: "sm", sm: "sm", md: "md", lg: "lg", xl: "lg" }}
             color="brand.500"
             fontWeight="medium"
             role="navigation"
@@ -146,7 +160,7 @@ const NavBar = () => {
                             size="sm"
                             _hover={{ bg: "brand.50" }}
                           >
-                            {t("Become Tutor")}
+                            {t("BecomeTutor")}
                           </Button>
                           <Button
                             as={NavLink}
@@ -156,7 +170,7 @@ const NavBar = () => {
                             size="sm"
                             _hover={{ bg: "brand.50" }}
                           >
-                            {t("Find Tutor")}
+                            {t("FindTutor")}
                           </Button>
                         </VStack>
                       </PopoverBody>
@@ -206,20 +220,79 @@ const NavBar = () => {
             />
           )}
 
-          <Button
-            onClick={toggleLanguage}
-            size={{ base: "sm", md: "md" }}
-            border="none"
-            borderRadius="md"
-            bg="brand.500"
-            color="white"
-            _hover={{ bg: "brand.600" }}
-            aria-label={`Switch to ${
-              i18n.language === "en" ? "Amharic" : "English"
-            } language`}
-          >
-            {i18n.language === "en" ? "Am" : "En"}
-          </Button>
+          <Popover placement="bottom-end">
+            <PopoverTrigger>
+              <Button
+                size={{ base: "sm", md: "md" }}
+                border="none"
+                borderRadius="md"
+                bg="brand.500"
+                color="white"
+                _hover={{ bg: "brand.600" }}
+                aria-label="Change language"
+                leftIcon={<CiGlobe />}
+              >
+                {i18n.language === "en" ? "En" : "Am"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent
+              width="auto"
+              border="none"
+              boxShadow="lg"
+              borderRadius="lg"
+              bg="white"
+            >
+              <PopoverArrow bg="white" />
+              <PopoverBody p={2}>
+                <VStack spacing={2} align="stretch">
+                  <Button
+                    onClick={() => changeLanguage("en")}
+                    variant="ghost"
+                    colorScheme="brand"
+                    size="sm"
+                    _hover={{ bg: "brand.50" }}
+                    isActive={i18n.language === "en"}
+                    leftIcon={
+                      <Box
+                        w="4"
+                        h="4"
+                        borderRadius="full"
+                        bg={
+                          i18n.language === "en" ? "brand.500" : "transparent"
+                        }
+                        border="1px solid"
+                        borderColor="brand.500"
+                      />
+                    }
+                  >
+                    English
+                  </Button>
+                  <Button
+                    onClick={() => changeLanguage("am")}
+                    variant="ghost"
+                    colorScheme="brand"
+                    size="sm"
+                    _hover={{ bg: "brand.50" }}
+                    isActive={i18n.language === "am"}
+                    leftIcon={
+                      <Box
+                        w="4"
+                        h="4"
+                        borderRadius="full"
+                        bg={
+                          i18n.language === "am" ? "brand.500" : "transparent"
+                        }
+                        border="1px solid"
+                        borderColor="brand.500"
+                      />
+                    }
+                  >
+                    Amharic
+                  </Button>
+                </VStack>
+              </PopoverBody>
+            </PopoverContent>
+          </Popover>
         </Flex>
       </Flex>
 
@@ -265,9 +338,12 @@ const NavBar = () => {
                           bg: "gray.50",
                           textDecoration: "none",
                         }}
-                        display="block"
+                        display="flex"
+                        alignItems="center"
+                        gap={3}
                       >
-                        {t("Become Tutor")}
+                        <Icon as={FiUserPlus} boxSize={5} />
+                        {t("BecomeTutor")}
                       </Link>
                       <Link
                         as={NavLink}
@@ -285,9 +361,12 @@ const NavBar = () => {
                           bg: "gray.50",
                           textDecoration: "none",
                         }}
-                        display="block"
+                        display="flex"
+                        alignItems="center"
+                        gap={3}
                       >
-                        {t("Find Tutor")}
+                        <Icon as={FiSearch} boxSize={5} />
+                        {t("FindTutor")}
                       </Link>
                     </>
                   ) : (
@@ -305,7 +384,11 @@ const NavBar = () => {
                         bg: "gray.50",
                         textDecoration: "none",
                       }}
+                      display="flex"
+                      alignItems="center"
+                      gap={3}
                     >
+                      {item.icon && <Icon as={item.icon} boxSize={5} />}
                       {item.label}
                     </Link>
                   )}
