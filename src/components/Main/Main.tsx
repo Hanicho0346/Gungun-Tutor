@@ -10,11 +10,12 @@ import {
   shouldForwardProp,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/swiper.css';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/modules/navigation.css';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/modules/pagination.css';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/modules/autoplay.css';
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import picture from "../../assets/Images/photo_2025-03-19_09-24-01.jpg";
@@ -31,11 +32,11 @@ import FeatureItem from "./FeatureItem";
 import HoverBox from "./HoverBox";
 import parents from "../../assets/Images/parents.png";
 import goongoontutor from "../../assets/Images/goongoon-tutor.png";
+
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
 });
-
 const Main = () => {
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -130,9 +131,7 @@ const Main = () => {
     },
     navigation: true,
     grabCursor: true,
-    effect: "slide",
   };
-
   const images = [picture, picture2, picture3];
 
   return (
@@ -141,7 +140,7 @@ const Main = () => {
         flexDir={{ base: "column", md: "row" }}
         alignItems="center"
         justifyContent="space-between"
-        mt={{ base: 20, md: 28 }}
+        mt={{ base: 10, md: 16 }}
         px={isMobile ? 0 : 7}
       >
         {isMobile && (
@@ -185,8 +184,6 @@ const Main = () => {
                 scale: [1, 1.2, 1],
               }}
               as={motion.span}
-            
-             
             />
             <Text
               color="brand.600"
@@ -248,17 +245,17 @@ const Main = () => {
         {!isMobile && (
           <>
             <Box width="100%" maxW="700px" mx="auto">
-              <Swiper {...sliderSettings} style={{ padding: "40x 0" }}>
+              <Swiper {...sliderSettings} style={{ padding: "40px 0" }}>
                 {images.map((picture, index) => (
                   <SwiperSlide key={index}>
                     <Box
                       position="relative"
                       width="100%"
-                      height={{ base: "400px", md: "600px" }} // Responsive height
+                      height={{ base: "400px", md: "600px" }}
                       borderRadius="xl"
                       overflow="hidden"
                       boxShadow="xl"
-                      transition="transform 0.3s ease" // Smooth hover effect
+                      transition="transform 0.3s ease"
                       _hover={{
                         transform: "scale(1.02)",
                         zIndex: 1,
@@ -266,21 +263,11 @@ const Main = () => {
                     >
                       <Image
                         src={picture}
-                        alt={`Educational tutoring slide ${index + 1}`} // More descriptive alt text
+                        alt={`Educational tutoring slide ${index + 1}`}
                         objectFit="cover"
                         width="100%"
                         height="100%"
-                        loading={index < 2 ? "eager" : "lazy"} // Eager load first 2 images
-                        decoding="async"
-                        style={{
-                          filter: "brightness(0.95)", // Slight brightness adjustment
-                          transition: "filter 0.3s ease",
-                        }}
-                        _hover={{
-                          filter: "brightness(1)",
-                        }}
                       />
-                      {/* Optional overlay/caption */}
                       <Box
                         position="absolute"
                         bottom={0}
