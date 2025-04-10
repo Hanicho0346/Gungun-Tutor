@@ -88,11 +88,12 @@ const Count = () => {
   return (
     <Flex
       ref={countRef}
-      direction={{ base: "column", md: "row" }}
+      direction={{ base: "row", md: "row" }}
       gap={6}
       justifyContent="center"
       alignItems="center"
       mt={10}
+      flexWrap="wrap"
     >
       <VStack>
         <Button
@@ -338,6 +339,7 @@ const About = () => {
                 position="relative"
                 width={20}
                 height={20}
+                minWidth={20}
                 transition="transform 0.3s ease"
                 _hover={{
                   transform: "rotateY(180deg)",
@@ -345,9 +347,11 @@ const About = () => {
               >
                 <Image
                   src={item.icon}
-                  width={20}
-                  height={20}
-                  mt={1}
+                  width={16}
+                  height={16}
+                  mt={2}
+                  ml={2}
+                  objectFit="contain"
                   transition="transform 0.2s ease"
                 />
               </Box>
