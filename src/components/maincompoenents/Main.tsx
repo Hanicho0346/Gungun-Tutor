@@ -10,7 +10,11 @@ import {
   shouldForwardProp,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import picture from "../../assets/Images/Ethiopian Kids Children.png";
@@ -23,25 +27,15 @@ import pcscreen from "../../assets/Images/pcscreen.png";
 import ClientCard from "./ClientCard";
 import FeatureItem from "./FeatureItem";
 import HoverBox from "./HoverBox";
-import parents from "../../assets/Images/parents.png"
+import parents from "../../assets/Images/parents.png";
 import goongoontutor from "../../assets/Images/goongoon-tutor.png";
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
 });
-const float = keyframes`
-  0% { transform: translateY(0) rotate(-10deg); }
-  50% { transform: translateY(-20px) rotate(-10deg); }
-  100% { transform: translateY(0) rotate(-10deg); }
-`;
 
-const floatOpposite = keyframes`
-  0% { transform: translateY(0) rotate(10deg); }
-  50% { transform: translateY(-20px) rotate(10deg); }
-  100% { transform: translateY(0) rotate(10deg); }
-`;
 
-const IMAGE_SIZES = { base: "250px", md: "400px", lg: "500px" };
+
 
 const Main = () => {
   const { t } = useTranslation();
@@ -107,19 +101,40 @@ const Main = () => {
     {
       number: "1",
       title: "Easy fill form",
-      description: "Families fill form with their needs - Tutors create profiles with their qualifications",
+      description:
+        "Families fill form with their needs - Tutors create profiles with their qualifications",
     },
     {
       number: "2",
       title: "Instant Matching",
-      description: "We connect families with suitable tutors through our Telegram network",
+      description:
+        "We connect families with suitable tutors through our Telegram network",
     },
     {
       number: "3",
       title: "Secure Start",
-      description: "After prepayment confirmation, lessons begin with direct contact between tutor and family",
+      description:
+        "After prepayment confirmation, lessons begin with direct contact between tutor and family",
     },
   ];
+  const sliderSettings = {
+    modules: [Navigation, Pagination, Autoplay],
+    spaceBetween: 30,
+    slidesPerView: 1,
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      clickable: true,
+    },
+    navigation: true,
+    grabCursor: true,
+    effect: 'slide',
+  };
+ 
+  const images = [picture, picture2, picture];
 
   return (
     <Box width="100%" overflow="hidden" px={isMobile ? 4 : 8}>
@@ -130,24 +145,24 @@ const Main = () => {
         mt={{ base: 20, md: 28 }}
         px={isMobile ? 0 : 7}
       >
-        {isMobile && (  
- <Box
- overflow="hidden"
- width="300px"
- height="300px"
- boxShadow="2xl"
- borderRadius="xl"
- mt={10}
- mx="auto"
->
- <Image
-   src={picture2}
-   alt="Tutoring Image"
-   objectFit="cover"
-   width="100%"
-   height="100%"
- />
-</Box>
+        {isMobile && (
+          <Box
+            overflow="hidden"
+            width="300px"
+            height="300px"
+            boxShadow="2xl"
+            borderRadius="xl"
+            mt={10}
+            mx="auto"
+          >
+            <Image
+              src={picture2}
+              alt="Tutoring Image"
+              objectFit="cover"
+              width="100%"
+              height="100%"
+            />
+          </Box>
         )}
         <Flex
           flexDir="column"
@@ -191,45 +206,33 @@ const Main = () => {
 
         {!isMobile && (
           <>
-            <Box
-              overflow="hidden"
-              width={IMAGE_SIZES}
-              height={IMAGE_SIZES}
-              boxShadow="2xl"
-              transform="rotate(-10deg)"
-              borderRadius="xl"
-              mt={{ base: 10, md: 16 }}
-              animation={`${float} 4s ease-in-out infinite`}
-            >
-              <Image
-                src={picture2}
-                alt="Tutoring Image"
-                objectFit="cover"
-                width="100%"
-                height="100%"
-              />
-            </Box>
-
-            <Box
-              overflow="hidden"
-              width={IMAGE_SIZES}
-              height={IMAGE_SIZES}
-              boxShadow="2xl"
-              transform="rotate(10deg)"
-              borderRadius="xl"
-              mt={{ base: 10, md: 0 }}
-              animation={`${floatOpposite} 4s ease-in-out infinite`}
-            >
-              <Image
-                src={picture}
-                alt="Tutoring Image"
-                objectFit="cover"
-                width="100%"
-                height="100%"
-              />
-            </Box>
+           <Box width="100%" maxW="700px" mx="auto">
+    <Swiper {...sliderSettings} style={{ padding: '20px 0' }}>
+      {images.map((picture, index) => (
+        <SwiperSlide key={index}>
+          <Box
+            position="relative"
+            width="100%"
+            height="400px"
+            borderRadius="xl"
+            overflow="hidden"
+            boxShadow="xl"
+          >
+            <Image
+              src={picture}
+              alt={`Slide ${index}`}
+              objectFit="cover"
+              width="100%"
+              height="100%"
+              loading="lazy"
+            />
+          </Box>
+        </SwiperSlide>
+      ))}
+    </Swiper>
+  </Box>
           </>
-        ) }
+        )}
       </Flex>
 
       <Box mt={{ base: 20, md: 32 }}>
@@ -288,12 +291,12 @@ const Main = () => {
             mt={isMobile ? 6 : 12}
           >
             <Text
-              p={{base:6,md:4}}
+              p={{ base: 6, md: 4 }}
               fontSize={{ base: "3xl", md: "2xl" }}
               letterSpacing="widest"
               fontFamily="sans-serif"
               fontWeight="bold"
-              mb={{base:4,md:2}}
+              mb={{ base: 4, md: 2 }}
             >
               Our Services
             </Text>
@@ -302,7 +305,7 @@ const Main = () => {
               maxW={"400px"}
               fontSize={{ base: "2xl", md: "3xl" }}
               fontWeight="bold"
-              textAlign={{base:"center",md:"center"}}
+              textAlign={{ base: "center", md: "center" }}
               lineHeight="shorter"
             >
               We will help your child with their academics
@@ -311,7 +314,7 @@ const Main = () => {
         </Box>
 
         <HoverBox
-          icon={<Image src={parents} color={"white"}  boxSize={10} />}
+          icon={<Image src={parents} color={"white"} boxSize={10} />}
           title="Consultation"
           description="We will help you to find the best solution for your child."
           color="white"
@@ -351,7 +354,6 @@ const Main = () => {
           </Text>
           <Text fontSize={{ base: "sm", md: "md" }} color="gray.500" mb={8}>
             Our tutors are trained to provide personalized learning experiences
-
           </Text>
           <Divider orientation="horizontal" />
 
