@@ -23,9 +23,9 @@ import {
 } from "@chakra-ui/react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useCallback, useMemo } from "react";
+import {useMemo } from "react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import logo from "../assets/Images/Logo Image.png";
+import logo from "../../assets/Images/Logo Image.png";
 import { CiGlobe } from "react-icons/ci";
 import {
   FiHome,
@@ -57,15 +57,12 @@ const NavBar = () => {
       { label: t("home"), path: "/", icon: FiHome },
       { label: t("about"), path: "/about", icon: FiInfo },
       { label: t("tutors"), path: "/tutors", isPopover: true, icon: FiUsers },
-      { label: t("contact"), path: "#contact", icon: FiMail },
+      { label: t("contact"), path: "/contact-us", icon: FiMail },
+      
     ],
     [t]
   );
 
-  const toggleLanguage = useCallback(() => {
-    const newLanguage = i18n.language === "en" ? "am" : "en";
-    i18n.changeLanguage(newLanguage);
-  }, [i18n]);
 
   const isActive = (path: string) => location.pathname === path;
 

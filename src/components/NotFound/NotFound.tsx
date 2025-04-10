@@ -1,7 +1,7 @@
 
 import { Box, Text, Button, Flex, Image,  } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import dollImage from "../assets/icons/20602777_6325255.svg"; 
+import dollImage from "../../assets/icons/20602777_6325255.svg"; 
 import {keyframes} from "@emotion/react";
 const float = keyframes`
   0% { transform: translateY(0); }

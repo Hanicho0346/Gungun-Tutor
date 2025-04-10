@@ -1,19 +1,20 @@
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { Box } from "@chakra-ui/react";
-import Main from "./components/maincompoenents/Main";
-import NotFound from "./components/NotFound";
-import NavBar from "./components/NavBar";
-import Footer from "./components/Footer";
-import About from "./components/About";
+import Main from "./components/Main/Main";
+import NotFound from "./components/NotFound/NotFound";
+import NavBar from "./components/Navbar/NavBar";
+import Footer from "./components/Footer/Footer";
+import About from "./components/About/About";
 import { useLocation } from "react-router-dom";
 
 
-import BecomeTutor from "./components/BecomeTutor";
-import FindTutor from "./components/FindTutor";
+import BecomeTutor from "./components/Tutors/BecomeTutor";
+import FindTutor from "./components/Tutors/FindTutor";
+import ContactUs from "./components/Contact/ContactUs";
 
 function Layout() {
   const location = useLocation();
-  const validRoutes = ["/", "/about", "/become-tutor", "/findtutor"];
+  const validRoutes = ["/", "/about", "/become-tutor", "/findtutor","/contact-us"];
   const isValidRoute = validRoutes.includes(location.pathname);
   const issignUp = location.pathname === "/signup";
 
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <NotFound />,
+      },
+      {
+        path:"/contact-us",
+        element:<ContactUs/>
       },
       {
         path:"/become-tutor", 

@@ -9,19 +9,19 @@ import {
   HStack,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import BgImage from "../assets/Images/gungun9.jpg";
+import BgImage from "../../assets/Images/gungun9.jpg";
 import { AiFillHome, AiOutlineRight } from "react-icons/ai";
-import GROUP from "../assets/Images/group.png";
+import GROUP from "../../assets/Images/group.png";
 import { NavLink } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
-import KID from "../assets/Images/kid1.png";
+import KID from "../../assets/Images/kid1.png";
 import { keyframes } from "@emotion/react";
-import BOOK from "../assets/Images/Logo Image.png";
+import BOOK from "../../assets/Images/Logo Image.png";
 import { motion } from "framer-motion";
 import { GoBook } from "react-icons/go";
-import USER from "../assets/Images/user.png";
-import PHONE from "../assets/Images/smartphone.png";
-import LIKE from "../assets/Images/like.png";
+import USER from "../../assets/Images/user.png";
+import PHONE from "../../assets/Images/smartphone.png";
+import LIKE from "../../assets/Images/like.png";
 
 const MotionBox = motion.create(Box);
 const float = keyframes`

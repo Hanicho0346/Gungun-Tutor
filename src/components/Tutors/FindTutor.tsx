@@ -1,5 +1,5 @@
 import { Box, Flex, FormControl, FormLabel, Heading, HStack, Image, Input, Select, VStack } from "@chakra-ui/react";
-import Tutor from "../assets/Images/tutor.png";
+import Tutor from "../../assets/Images/tutor.png";
 
 const FindTutor: React.FC = () => {
   return (
