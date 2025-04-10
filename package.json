@@ -19,6 +19,7 @@
     "gugun": "file:",
     "i18next": "^24.2.3",
     "leaflet": "^1.9.4",
+    "lucide-react": "^0.476.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-i18next": "^15.4.1",

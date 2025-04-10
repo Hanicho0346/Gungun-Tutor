@@ -135,10 +135,10 @@ const Footer = () => {
                 Contact Us
               </Text>
               <VStack align={{ base: "center", md: "start" }} spacing={3}>
-                <Text fontSize="md">Email: info@goonguntutor.com</Text>
-                <Text fontSize="md">Phone: +1 (123) 456-7890</Text>
+                <Text fontSize="md">Email: info@goongoon.net</Text>
+                <Text fontSize="md">Phone: 0924-5643-89</Text>
                 <Text fontSize="md" textAlign={{ base: "center", md: "left" }}>
-                  Address: 123 Tutor St, Education City, World
+                  Address: Addis ababa
                 </Text>
               </VStack>
             </Box>
