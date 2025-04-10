@@ -1,4 +1,4 @@
-import { Box, Flex, FormControl, FormLabel, Heading, HStack, Image, Input, Select, Textarea, VStack } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, FormLabel, Heading, HStack, Image, Input, Select, Textarea, VStack,Text } from "@chakra-ui/react";
 import Tutor from "../assets/Images/tutor.png";
 import * as Yup from "yup";
 import {Formik} from "formik";
@@ -126,6 +126,18 @@ export default function FindTutor (props:FindTutorProps) {
             <FormLabel>Special Requirements</FormLabel>
             <Textarea size="lg" h={44} bg={"white"}/>
           </FormControl>
+          <Button
+          width={"50%"}
+          h={16}
+          mt={5}
+          bgGradient="linear(to-l, orange.300, brand.200)"
+          borderRadius={"60px"}
+          >
+            <Text color={"white"}
+            fontFamily={"'Open Sans', sans-serif"}
+            fontSize={25}
+            >REQUEST TUTOR</Text>
+            </Button>
         </VStack>
         </Formik>
       </VStack>
