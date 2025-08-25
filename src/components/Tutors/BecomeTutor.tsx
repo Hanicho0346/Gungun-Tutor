@@ -38,11 +38,11 @@ import {
   CheckCircle,
   CreditCard,
 } from "lucide-react";
-import growth from "../assets/Images/trend.png";
-import picture from "../assets/Images/tutor-girl.png";
-import Hana from "../assets/Images/tutor-girl.png";
-import Sarah from "../assets/Images/user.png";
-import Tsion from "../assets/Images/kid1.png";
+import growth from "../../assets/Images/trend.png";
+import picture from "../../assets/Images/tutor-girl.png";
+import Hana from "../../assets/Images/user1.jpg";
+import Sarah from "../../assets/Images/user3.jpg";
+import Tsion from "../../assets/Images/user2.jpg";
 
 const colors = {
   primary: {

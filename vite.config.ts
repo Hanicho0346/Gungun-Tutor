@@ -6,5 +6,11 @@ export default defineConfig({
   plugins: [react()],
   optimizeDeps: {
     include: ['leaflet', 'react-leaflet'],
+  },
+  build: {
+    rollupOptions: {
+      external: ['swiper']
+    }
   }
+
 })

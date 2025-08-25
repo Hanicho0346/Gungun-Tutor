@@ -1,10 +1,11 @@
 export interface Tutore {
     fname:string;
     lname:string;
-    phone:number;
+    phone:string;
     email:string;
     hadress:string;
     gofstudent:string;
-    hperday:number;
+    dperweek:string;
+    hperday:string;
     subject:string;
     }

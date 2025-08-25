@@ -10,39 +10,33 @@ import {
   shouldForwardProp,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { keyframes } from "@emotion/react";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/swiper.css';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/modules/navigation.css';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/modules/pagination.css';
+import 'C:/Users/Admin/Desktop/Gungun-tutor/node_modules/swiper/modules/autoplay.css';
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import picture from "../../assets/Images/Ethiopian Kids Children.png";
-import picture2 from "../../assets/Images/One-on-One-Tutoring.jpg";
+import picture from "../../assets/Images/photo_2025-03-19_09-24-01.jpg";
+import picture2 from "../../assets/Images/photo_2025-03-19_09-24-02 (2).jpg";
+import picture3 from "../../assets/Images/photo_2025-03-19_09-24-03.jpg";
 import chat from "../../assets/Images/chat.png";
+import picture4 from "../../assets/Images/Ethiopian Kids Children.png";
 import { Link } from "react-router-dom";
 import { isValidMotionProp, motion } from "framer-motion";
-import AddisAbabaMap from "../AddisAbabaMap";
+import AddisAbabaMap from "../Map/AddisAbabaMap";
 import pcscreen from "../../assets/Images/pcscreen.png";
 import ClientCard from "./ClientCard";
 import FeatureItem from "./FeatureItem";
 import HoverBox from "./HoverBox";
-import parents from "../../assets/Images/parents.png"
+import parents from "../../assets/Images/parents.png";
 import goongoontutor from "../../assets/Images/goongoon-tutor.png";
+
 const MotionBox = chakra(motion.div, {
   shouldForwardProp: (prop) =>
     isValidMotionProp(prop) || shouldForwardProp(prop),
 });
-const float = keyframes`
-  0% { transform: translateY(0) rotate(-10deg); }
-  50% { transform: translateY(-20px) rotate(-10deg); }
-  100% { transform: translateY(0) rotate(-10deg); }
-`;
-
-const floatOpposite = keyframes`
-  0% { transform: translateY(0) rotate(10deg); }
-  50% { transform: translateY(-20px) rotate(10deg); }
-  100% { transform: translateY(0) rotate(10deg); }
-`;
-
-const IMAGE_SIZES = { base: "250px", md: "400px", lg: "500px" };
-
 const Main = () => {
   const { t } = useTranslation();
   const [activeIndex, setActiveIndex] = useState(0);
@@ -107,19 +101,38 @@ const Main = () => {
     {
       number: "1",
       title: "Easy fill form",
-      description: "Families fill form with their needs - Tutors create profiles with their qualifications",
+      description:
+        "Families fill form with their needs - Tutors create profiles with their qualifications",
     },
     {
       number: "2",
       title: "Instant Matching",
-      description: "We connect families with suitable tutors through our Telegram network",
+      description:
+        "We connect families with suitable tutors through our Telegram network",
     },
     {
       number: "3",
       title: "Secure Start",
-      description: "After prepayment confirmation, lessons begin with direct contact between tutor and family",
+      description:
+        "After prepayment confirmation, lessons begin with direct contact between tutor and family",
     },
   ];
+  const sliderSettings = {
+    modules: [Navigation, Pagination, Autoplay],
+    spaceBetween: 30,
+    slidesPerView: 1,
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      clickable: true,
+    },
+    navigation: true,
+    grabCursor: true,
+  };
+  const images = [picture, picture2, picture3];
 
   return (
     <Box width="100%" overflow="hidden" px={isMobile ? 4 : 8}>
@@ -127,109 +140,165 @@ const Main = () => {
         flexDir={{ base: "column", md: "row" }}
         alignItems="center"
         justifyContent="space-between"
-        mt={{ base: 20, md: 28 }}
+        mt={{ base: 10, md: 16 }}
         px={isMobile ? 0 : 7}
       >
-        {isMobile && (  
- <Box
- overflow="hidden"
- width="300px"
- height="300px"
- boxShadow="2xl"
- borderRadius="xl"
- mt={10}
- mx="auto"
->
- <Image
-   src={picture2}
-   alt="Tutoring Image"
-   objectFit="cover"
-   width="100%"
-   height="100%"
- />
-</Box>
+        {isMobile && (
+          <Box
+            overflow="hidden"
+            width="300px"
+            height="300px"
+            boxShadow="2xl"
+            borderRadius="xl"
+            mt={10}
+            mx="auto"
+          >
+            <Image
+              src={picture2}
+              alt="Tutoring Image"
+              objectFit="cover"
+              width="100%"
+              height="100%"
+            />
+          </Box>
         )}
         <Flex
           flexDir="column"
           maxWidth={{ base: "100%", md: "40%" }}
           textAlign={isMobile ? "center" : "left"}
+          gap={4} // Added consistent gap between children
         >
-          <Box>
+          {/* Improved badge component with better structure */}
+          <Flex
+            alignItems="center"
+            mt={{ base: 10, md: 16 }}
+            mb={2} // Added margin bottom for separation
+            gap={2} // Consistent gap between items
+          >
+            <Box
+              width={2}
+              height={2}
+              bg="brand.500"
+              borderRadius="full"
+              animate={{
+                scale: [1, 1.2, 1],
+              }}
+              as={motion.span}
+            />
             <Text
-              fontSize={{ base: "2xl", sm: "3xl", md: "5xl" }}
-              fontWeight="bold"
-              mt={{ base: 10, md: 24 }}
-              lineHeight="1.2"
+              color="brand.600"
+              fontSize={{ base: "xs", md: "sm" }}
+              fontWeight="semibold"
+              letterSpacing="wide"
+              textTransform="uppercase" // Makes the text more badge-like
             >
-              Empower Your{" "}
-              <Box as="span" color="brand.500">
-                Child's
-              </Box>{" "}
-              Future with Expert Tutoring
+              Join Our Trusted Tutor Network
             </Text>
-            {isMobile && (
-              <Text mt={4} color="gray.600" fontSize="md">
-                Personalized one-on-one tutoring for all subjects and grade
-                levels
-              </Text>
-            )}
-          </Box>
+          </Flex>
+
+          {/* Improved heading with better spacing */}
+          <Text
+            fontSize={{ base: "2xl", sm: "3xl", md: "5xl" }}
+            fontWeight="bold"
+            lineHeight="1.2"
+            mb={isMobile ? 2 : 4} // Responsive margin bottom
+          >
+            Empower Your{" "}
+            <Box as="span" color="brand.500">
+              Child's
+            </Box>{" "}
+            Future with Expert Tutoring
+          </Text>
+
+          {/* Subtext with improved readability */}
+          {isMobile && (
+            <Text color="gray.600" fontSize="md" mb={6}>
+              Personalized one-on-one tutoring for all subjects and grade levels
+            </Text>
+          )}
+
+          {/* Enhanced button with better hover states */}
           <Button
-            width={{ base: "100%", sm: "32" }}
+            width={{ base: "100%", sm: "auto" }} // Changed to auto for better proportions
             height="14"
-            mt={10}
+            px={8} // Added horizontal padding
+            mt={isMobile ? 4 : 6} // Responsive top margin
             alignSelf={{ base: "center", md: "flex-start" }}
             color="white"
             bg="brand.500"
             borderRadius="xl"
             boxShadow="xl"
-            _hover={{ bg: "brand.600", transform: "scale(1.05)" }}
+            _hover={{
+              bg: "brand.600",
+              transform: "scale(1.05)",
+              boxShadow: "2xl", // Enhanced shadow on hover
+            }}
+            _active={{
+              transform: "scale(0.98)",
+            }}
+            transition="all 0.2s ease"
           >
-            Get Tutor
+            Find a Tutor
           </Button>
         </Flex>
 
         {!isMobile && (
           <>
-            <Box
-              overflow="hidden"
-              width={IMAGE_SIZES}
-              height={IMAGE_SIZES}
-              boxShadow="2xl"
-              transform="rotate(-10deg)"
-              borderRadius="xl"
-              mt={{ base: 10, md: 16 }}
-              animation={`${float} 4s ease-in-out infinite`}
-            >
-              <Image
-                src={picture2}
-                alt="Tutoring Image"
-                objectFit="cover"
-                width="100%"
-                height="100%"
-              />
-            </Box>
-
-            <Box
-              overflow="hidden"
-              width={IMAGE_SIZES}
-              height={IMAGE_SIZES}
-              boxShadow="2xl"
-              transform="rotate(10deg)"
-              borderRadius="xl"
-              mt={{ base: 10, md: 0 }}
-              animation={`${floatOpposite} 4s ease-in-out infinite`}
-            >
-              <Image
-                src={picture}
-                alt="Tutoring Image"
-                objectFit="cover"
-                width="100%"
-                height="100%"
-              />
+            <Box width="100%" maxW="700px" mx="auto">
+              <Swiper {...sliderSettings} style={{ padding: "40px 0" }}>
+                {images.map((picture, index) => (
+                  <SwiperSlide key={index}>
+                    <Box
+                      position="relative"
+                      width="100%"
+                      height={{ base: "400px", md: "600px" }}
+                      borderRadius="xl"
+                      overflow="hidden"
+                      boxShadow="xl"
+                      transition="transform 0.3s ease"
+                      _hover={{
+                        transform: "scale(1.02)",
+                        zIndex: 1,
+                      }}
+                    >
+                      <Image
+                        src={picture}
+                        alt={`Educational tutoring slide ${index + 1}`}
+                        objectFit="cover"
+                        width="100%"
+                        height="100%"
+                      />
+                      <Box
+                        position="absolute"
+                        bottom={0}
+                        left={0}
+                        right={0}
+                        p={4}
+                        bg="linear-gradient(to top, rgba(0,0,0,0.7), transparent)"
+                        color="white"
+                      >
+                        <Text fontSize="lg" fontWeight="bold">
+                          {index === 0
+                            ? "Personalized Tutoring"
+                            : index === 1
+                            ? "Expert Educators"
+                            : "Flexible Scheduling"}
+                        </Text>
+                        <Text fontSize="sm">
+                          {index === 0
+                            ? "Tailored to your child's needs"
+                            : index === 1
+                            ? "Qualified and experienced tutors"
+                            : "Learn at your own pace"}
+                        </Text>
+                      </Box>
+                    </Box>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
             </Box>
           </>
-        ) }
+        )}
       </Flex>
 
       <Box mt={{ base: 20, md: 32 }}>
@@ -288,12 +357,12 @@ const Main = () => {
             mt={isMobile ? 6 : 12}
           >
             <Text
-              p={{base:6,md:4}}
+              p={{ base: 6, md: 4 }}
               fontSize={{ base: "3xl", md: "2xl" }}
               letterSpacing="widest"
               fontFamily="sans-serif"
               fontWeight="bold"
-              mb={{base:4,md:2}}
+              mb={{ base: 4, md: 2 }}
             >
               Our Services
             </Text>
@@ -302,7 +371,7 @@ const Main = () => {
               maxW={"400px"}
               fontSize={{ base: "2xl", md: "3xl" }}
               fontWeight="bold"
-              textAlign={{base:"center",md:"center"}}
+              textAlign={{ base: "center", md: "center" }}
               lineHeight="shorter"
             >
               We will help your child with their academics
@@ -311,7 +380,7 @@ const Main = () => {
         </Box>
 
         <HoverBox
-          icon={<Image src={parents} color={"white"}  boxSize={10} />}
+          icon={<Image src={parents} color={"white"} boxSize={10} />}
           title="Consultation"
           description="We will help you to find the best solution for your child."
           color="white"
@@ -351,7 +420,6 @@ const Main = () => {
           </Text>
           <Text fontSize={{ base: "sm", md: "md" }} color="gray.500" mb={8}>
             Our tutors are trained to provide personalized learning experiences
-
           </Text>
           <Divider orientation="horizontal" />
 
@@ -388,14 +456,14 @@ const Main = () => {
         {isMobile ? (
           <Box width="80%" mt={8}>
             <Image
-              src={picture}
+              src={picture4}
               alt="Features illustration"
               borderRadius="xl"
             />
           </Box>
         ) : (
           <Box>
-            <Image src={picture} alt="Features illustration" />
+            <Image src={picture4} alt="Features illustration" />
           </Box>
         )}
       </Flex>
